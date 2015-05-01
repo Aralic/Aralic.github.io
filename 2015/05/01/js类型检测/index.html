@@ -275,16 +275,10 @@
 <pre><code>Array.prototype.<span class="variable">toString =</span> Object.prototype.<span class="built_in">toString</span>;
 [].<span class="built_in">toString</span>(); // <span class="string">"[object Array]"</span>
 </code></pre><p> 验证出来了call的作用方法，同时也得出Array原型重写了toString方法（原型链关系推出来的）紧接着，我去了<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/toString" target="_blank" rel="external">MDN</a>查阅Object原型的toString方法，看看这究竟是什么鬼？原来这个返回对象类型字符串。同时像时间对象，正则对象，数学对象等等都能返回出来。</p>
-<pre><code><span class="keyword">var</span> <span class="built_in">toString</span> = <span class="type">Object</span>.prototype.<span class="built_in">toString</span>;
-
-<span class="built_in">toString</span>.call(<span class="keyword">new</span> <span class="type">Date</span>); <span class="comment">// [object Date]</span>
-<span class="built_in">toString</span>.call(<span class="keyword">new</span> <span class="type">String</span>); <span class="comment">// [object String]</span>
-<span class="built_in">toString</span>.call(<span class="type">Math</span>); <span class="comment">// [object Math]</span>
-
-<span class="comment">//Since JavaScript 1.8.5</span>
-<span class="built_in">toString</span>.call(undefined); <span class="comment">// [object Undefined]</span>
-<span class="built_in">toString</span>.call(null); <span class="comment">// [object Null]</span>
-</code></pre><p> 好强大的样子！不过为什么官方取这个名字，好容易让人疑惑？？？</p>
+<pre><code><span class="keyword">var</span> <span class="keyword">toString</span> = Object.prototype.<span class="keyword">toString</span>;
+</code></pre><p> toString.call(new Date); // [object Date]<br> toString.call(new String); // [object String]<br> toString.call(Math); // [object Math]</p>
+<p> //Since JavaScript 1.8.5<br> toString.call(undefined); // [object Undefined]<br> toString.call(null); // [object Null]</p>
+<p> 好强大的样子！不过为什么官方取这个名字，好容易让人疑惑？？？</p>
 </li>
 </ol>
 
