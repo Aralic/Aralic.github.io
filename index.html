@@ -284,17 +284,21 @@ foo();
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>&#160; &#160; &#160;&#160;大约是三月初吧，在网上看到一道面试题，怎么判断一个变量类型是不是数组。然后从犀牛书以及查阅一些资料得到了答案。</p>
+        <p>大约是三月初吧，在网上看到一道面试题，怎么判断一个变量类型是不是数组。然后从犀牛书以及查阅一些资料得到了答案。</p>
 <h4 id="这里分为四种情况分析：">这里分为四种情况分析：</h4><ol>
 <li><p>通过constructor</p>
-<p><code>[].constructor === Array; //true</code></p>
-<p> 这种方法比较坑，不推荐，因为constructor是可以自己修改的。</p>
+<p> [].constructor === Array; //true</p>
 </li>
+</ol>
+<p>这种方法比较坑，不推荐，因为constructor是可以自己修改的。</p>
+<ol>
 <li><p>通过instanceof</p>
-<p><code>[] instanceof Array; //true</code></p>
-<p>犀牛书给出的解释是在页面中含多个窗体或者iframe，那么会产生很多执行环境，一个iframe下的数组不是另一个窗体下构造函数的实例。那么如果出现这种极端条件，instanceof也不推荐使用。</p>
+<p>[] instanceof Array; //true</p>
 </li>
-<li><p>通过Array.isArray</p>
+</ol>
+<p>犀牛书给出的解释是在页面中含多个窗体或者iframe，那么会产生很多执行环境，一个iframe下的数组不是另一个窗体下构造函数的实例。那么如果出现这种极端条件，instanceof也不推荐使用。</p>
+<ol>
+<li>通过Array.isArray
       
     </div>
     

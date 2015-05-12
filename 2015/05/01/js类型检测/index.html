@@ -5,36 +5,51 @@
   
   <title>js类型检测 | Aralic的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="&amp;#160; &amp;#160; &amp;#160;&amp;#160;大约是三月初吧，在网上看到一道面试题，怎么判断一个变量类型是不是数组。然后从犀牛书以及查阅一些资料得到了答案。
+  <meta name="description" content="大约是三月初吧，在网上看到一道面试题，怎么判断一个变量类型是不是数组。然后从犀牛书以及查阅一些资料得到了答案。
 这里分为四种情况分析：
 通过constructor
-[].constructor === Array; //true
- 这种方法比较坑，不推荐，因为constructor是可以自己修改的。
+ [].constructor === Array; //true
+
+
+这种方法比较坑，不推荐，因为constructor是可以自己修改的。
 
 通过instanceof
-[] instan">
+[] instanceof Array; //true
+
+
+犀牛书">
 <meta property="og:type" content="article">
 <meta property="og:title" content="js类型检测">
 <meta property="og:url" content="http://yoursite.com/2015/05/01/js类型检测/index.html">
 <meta property="og:site_name" content="Aralic的博客">
-<meta property="og:description" content="&amp;#160; &amp;#160; &amp;#160;&amp;#160;大约是三月初吧，在网上看到一道面试题，怎么判断一个变量类型是不是数组。然后从犀牛书以及查阅一些资料得到了答案。
+<meta property="og:description" content="大约是三月初吧，在网上看到一道面试题，怎么判断一个变量类型是不是数组。然后从犀牛书以及查阅一些资料得到了答案。
 这里分为四种情况分析：
 通过constructor
-[].constructor === Array; //true
- 这种方法比较坑，不推荐，因为constructor是可以自己修改的。
+ [].constructor === Array; //true
+
+
+这种方法比较坑，不推荐，因为constructor是可以自己修改的。
 
 通过instanceof
-[] instan">
+[] instanceof Array; //true
+
+
+犀牛书">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js类型检测">
-<meta name="twitter:description" content="&amp;#160; &amp;#160; &amp;#160;&amp;#160;大约是三月初吧，在网上看到一道面试题，怎么判断一个变量类型是不是数组。然后从犀牛书以及查阅一些资料得到了答案。
+<meta name="twitter:description" content="大约是三月初吧，在网上看到一道面试题，怎么判断一个变量类型是不是数组。然后从犀牛书以及查阅一些资料得到了答案。
 这里分为四种情况分析：
 通过constructor
-[].constructor === Array; //true
- 这种方法比较坑，不推荐，因为constructor是可以自己修改的。
+ [].constructor === Array; //true
+
+
+这种方法比较坑，不推荐，因为constructor是可以自己修改的。
 
 通过instanceof
-[] instan">
+[] instanceof Array; //true
+
+
+犀牛书">
   
     <link rel="alternative" href="/atom.xml" title="Aralic的博客" type="application/atom+xml">
   
@@ -251,36 +266,43 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>&#160; &#160; &#160;&#160;大约是三月初吧，在网上看到一道面试题，怎么判断一个变量类型是不是数组。然后从犀牛书以及查阅一些资料得到了答案。</p>
+        <p>大约是三月初吧，在网上看到一道面试题，怎么判断一个变量类型是不是数组。然后从犀牛书以及查阅一些资料得到了答案。</p>
 <h4 id="这里分为四种情况分析：">这里分为四种情况分析：</h4><ol>
 <li><p>通过constructor</p>
-<p><code>[].constructor === Array; //true</code></p>
-<p> 这种方法比较坑，不推荐，因为constructor是可以自己修改的。</p>
-</li>
-<li><p>通过instanceof</p>
-<p><code>[] instanceof Array; //true</code></p>
-<p>犀牛书给出的解释是在页面中含多个窗体或者iframe，那么会产生很多执行环境，一个iframe下的数组不是另一个窗体下构造函数的实例。那么如果出现这种极端条件，instanceof也不推荐使用。</p>
-</li>
-<li><p>通过Array.isArray</p>
-<a id="more"></a>
-<p>在新版浏览器，IE9+都已经实现了原生方法</p>
-<p>Array.isArray([1,2]); //true</p>
+<p> [].constructor === Array; //true</p>
 </li>
 </ol>
+<p>这种方法比较坑，不推荐，因为constructor是可以自己修改的。</p>
+<ol>
+<li><p>通过instanceof</p>
+<p>[] instanceof Array; //true</p>
+</li>
+</ol>
+<p>犀牛书给出的解释是在页面中含多个窗体或者iframe，那么会产生很多执行环境，一个iframe下的数组不是另一个窗体下构造函数的实例。那么如果出现这种极端条件，instanceof也不推荐使用。</p>
+<ol>
+<li>通过Array.isArray<a id="more"></a>
+在新版浏览器，IE9+都已经实现了原生方法</li>
+</ol>
+<p>Array.isArray([1,2]); //true</p>
 <ol>
 <li><p>通过toSting</p>
-<p> <code>Object.prototype.toString.call([]) === &#39;[object Array]&#39;</code></p>
-<p> 在一些博客和犀牛书给出的都是这种方法。<br> 因为之前对call语法，toString方法的疑惑，导致我只能死记硬背这句代码。最近在回顾继承有关知识，学到了call方法，这段代码意思是对[]调用Object对象原型下的toString方法，不同于数组原型下的toString的方法，之所以疑惑，因为数组下的toString是把一个数组转成字符串。为了屏蔽掉call方法的干扰。</p>
+<p> Object.prototype.toString.call([]) === ‘[object Array]’</p>
+<p>在一些博客和犀牛书给出的都是这种方法。</p>
+<p>因为之前对call语法，toString方法的疑惑，导致我只能死记硬背这句代码。最近在回顾继承有关知识，学到了call方法，这段代码意思是对[]调用Object对象原型下的toString方法，不同于数组原型下的toString的方法，之所以疑惑，因为数组下的toString是把一个数组转成字符串。为了屏蔽掉call方法的干扰。</p>
 <p> 我做了一个小处理</p>
-<pre><code>Array.prototype.<span class="variable">toString =</span> Object.prototype.<span class="built_in">toString</span>;
-[].<span class="built_in">toString</span>(); // <span class="string">"[object Array]"</span>
-</code></pre><p> 验证出来了call的作用方法，同时也得出Array原型重写了toString方法（原型链关系推出来的）紧接着，我去了<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/toString" target="_blank" rel="external">MDN</a>查阅Object原型的toString方法，看看这究竟是什么鬼？原来这个返回对象类型字符串。同时像时间对象，正则对象，数学对象等等都能返回出来。</p>
-<pre><code><span class="keyword">var</span> <span class="keyword">toString</span> = Object.prototype.<span class="keyword">toString</span>;
-</code></pre><p> toString.call(new Date); // [object Date]<br> toString.call(new String); // [object String]<br> toString.call(Math); // [object Math]</p>
-<p> //Since JavaScript 1.8.5<br> toString.call(undefined); // [object Undefined]<br> toString.call(null); // [object Null]</p>
-<p> 好强大的样子！不过为什么官方取这个名字，好容易让人疑惑？？？</p>
+<p> Array.prototype.toString = Object.prototype.toString;<br> [].toString(); // “[object Array]”</p>
 </li>
 </ol>
+<p>验证出来了call的作用方法，同时也得出Array原型重写了toString方法（原型链关系推出来的）紧接着，我去了<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/toString" target="_blank" rel="external">MDN</a>查阅Object原型的toString方法，看看这究竟是什么鬼？原来这个返回对象类型字符串。同时像时间对象，正则对象，数学对象等等都能返回出来。</p>
+<pre><code><span class="keyword">var</span> <span class="built_in">toString</span> = <span class="type">Object</span>.prototype.<span class="built_in">toString</span>;
+<span class="built_in">toString</span>.call(<span class="keyword">new</span> <span class="type">Date</span>); <span class="comment">// [object Date]</span>
+<span class="built_in">toString</span>.call(<span class="keyword">new</span> <span class="type">String</span>); <span class="comment">// [object String]</span>
+<span class="built_in">toString</span>.call(<span class="type">Math</span>); <span class="comment">// [object Math]</span>
+
+<span class="comment">//Since JavaScript 1.8.5</span>
+<span class="built_in">toString</span>.call(undefined); <span class="comment">// [object Undefined]</span>
+<span class="built_in">toString</span>.call(null); <span class="comment">// [object Null]</span>
+</code></pre><p>好强大的样子！不过为什么官方取这个名字，好容易让人疑惑？？？</p>
 
       
     </div>
