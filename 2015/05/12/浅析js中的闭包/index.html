@@ -3,17 +3,41 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Aralic的博客</title>
+  <title>浅析js中的this | Aralic的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="这里是Aralic的博客，啦啦啦">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Aralic的博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="很长一段时间不理解闭包，后来了解了作用域，以及this相关问题才理解了闭包相关知识。闭包（closure），也是面试题常客。简单点来说就是函数嵌套函数。
+函数作为返回值:function foo () {
+    var a = 1;
+    return function () {
+      a++;
+      console.log(a);
+    }
+}
+var aaa = foo();">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅析js中的this">
+<meta property="og:url" content="http://yoursite.com/2015/05/12/浅析js中的闭包/index.html">
 <meta property="og:site_name" content="Aralic的博客">
-<meta property="og:description" content="这里是Aralic的博客，啦啦啦">
+<meta property="og:description" content="很长一段时间不理解闭包，后来了解了作用域，以及this相关问题才理解了闭包相关知识。闭包（closure），也是面试题常客。简单点来说就是函数嵌套函数。
+函数作为返回值:function foo () {
+    var a = 1;
+    return function () {
+      a++;
+      console.log(a);
+    }
+}
+var aaa = foo();">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Aralic的博客">
-<meta name="twitter:description" content="这里是Aralic的博客，啦啦啦">
+<meta name="twitter:title" content="浅析js中的this">
+<meta name="twitter:description" content="很长一段时间不理解闭包，后来了解了作用域，以及this相关问题才理解了闭包相关知识。闭包（closure），也是面试题常客。简单点来说就是函数嵌套函数。
+函数作为返回值:function foo () {
+    var a = 1;
+    return function () {
+      a++;
+      console.log(a);
+    }
+}
+var aaa = foo();">
   
     <link rel="alternative" href="/atom.xml" title="Aralic的博客" type="application/atom+xml">
   
@@ -187,9 +211,7 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap">
-  
-    <article id="post-浅析js中的闭包" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-浅析js中的闭包" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2015/05/12/浅析js中的闭包/" class="article-date">
@@ -205,12 +227,23 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/05/12/浅析js中的闭包/">浅析js中的this</a>
+    <h1 class="article-title" itemprop="name">
+      浅析js中的this
     </h1>
   
 
       </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/闭包/">闭包</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
       
     
     <div class="article-entry" itemprop="articleBody">
@@ -297,226 +330,61 @@ repeatedFun (<span class="string">"hellworld"</span>);
       
     </div>
     
-    <div class="article-info article-info-index">
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/闭包/">闭包</a></li></ul>
-	</div>
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/05/12/浅析js中的this/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">浅析js中的this</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
   
 </article>
 
 
-
-
-
-
-  
-    <article id="post-浅析js中的this" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/05/12/浅析js中的this/" class="article-date">
-  	<time datetime="2015-05-12T05:07:10.000Z" itemprop="datePublished">2015-05-12</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/05/12/浅析js中的this/">浅析js中的this</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="this的用法">this的用法</h3><p>this在日常javascript编码中很常见， 但是一直以来没有好好总结过。 今天在这里好好总结一下。 本文只讨论浏览器环境。 </p>
-<h4 id="this指向全局">this指向全局</h4><pre><code><span class="keyword">var</span> name = <span class="string">"window"</span>;
-<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> </span>{
-    <span class="keyword">var</span> name = <span class="string">"local"</span>;
-    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);
-}
-foo(); 
-</code></pre><p>相信这段代码大家都看到过，在这里this指向了全局，输入结果是”window”.一开始我也不理解为什么有些时候this是指向内部函数，有些时候是指向window了。 相信好多小伙伴都和我一样比较疑惑， 后来我去翻阅犀牛书，犀牛书对函数this的解释是：关键字this没有作业域限制， 嵌套的函数不会从调用它的函数中继承this如果函数嵌套作为方法调用其this的值指向调用它的对象。 如果嵌套函数作为函数调用，其this不是全局对象（非严格模式下）就是undefined（严格模式下）。<br>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/类型/">类型</a></li></ul>
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
 	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/05/12/浅析js中的this/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
 
 
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="浅析js中的闭包" data-title="浅析js中的this" data-url="http://yoursite.com/2015/05/12/浅析js中的闭包/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
 
 
 
-  
-    <article id="post-js类型检测" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/05/01/js类型检测/" class="article-date">
-  	<time datetime="2015-05-01T05:58:32.000Z" itemprop="datePublished">2015-05-01</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/05/01/js类型检测/">js类型检测</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>大约是三月初吧，在网上看到一道面试题，怎么判断一个变量类型是不是数组。然后从犀牛书以及查阅一些资料得到了答案。</p>
-<h4 id="这里分为四种情况分析：">这里分为四种情况分析：</h4><ol>
-<li><p>通过constructor</p>
-<p> [].constructor === Array; //true</p>
-</li>
-</ol>
-<p>这种方法比较坑，不推荐，因为constructor是可以自己修改的。</p>
-<ol>
-<li><p>通过instanceof</p>
-<p>[] instanceof Array; //true</p>
-</li>
-</ol>
-<p>犀牛书给出的解释是在页面中含多个窗体或者iframe，那么会产生很多执行环境，一个iframe下的数组不是另一个窗体下构造函数的实例。那么如果出现这种极端条件，instanceof也不推荐使用。</p>
-<ol>
-<li>通过Array.isArray
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/类型/">类型</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/05/01/js类型检测/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
-    <article id="post-javascript原型学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/04/29/javascript原型学习笔记/" class="article-date">
-  	<time datetime="2015-04-29T10:58:32.000Z" itemprop="datePublished">2015-04-29</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/04/29/javascript原型学习笔记/">js原型笔记</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="javascript是基于原型的一门脚本语言，那究竟原型是什么？">javascript是基于原型的一门脚本语言，那究竟原型是什么？</h3><h4 id="本文将从以下几个方面重点阐述原型">本文将从以下几个方面重点阐述原型</h4><ol>
-<li>构造函数是什么？</li>
-<li>构造函数和我们常见的Array String有什么关系？</li>
-<li>原型的使用？</li>
-<li><code>__proto__</code>是什么？</li>
-<li>constructor是什么？</li>
-<li>什么是原形链？</li>
-</ol>
-<hr>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原型/">原型</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/04/29/javascript原型学习笔记/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
-  
 </div>
       <footer id="footer">
   <div class="outer">
