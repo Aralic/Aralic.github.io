@@ -193,7 +193,7 @@
   
     <div class="article-meta">
       <a href="/2015/05/16/浅析js中的继承/" class="article-date">
-  	<time datetime="2015-05-16T15:22:02.942Z" itemprop="datePublished">2015-05-16</time>
+  	<time datetime="2015-05-16T15:29:35.178Z" itemprop="datePublished">2015-05-16</time>
 </a>
     </div>
   
@@ -217,10 +217,26 @@
       
         <p>在js中<strong>继承</strong>主要是依靠原形链来实现。如果不了解原型相关知识，建议读者先去了解<a href="http://www.cnblogs.com/Aralic/p/4466343.html">原形链</a>。</p>
 <p>每个构造函数都有一个原型对象（<code>prototype</code>），原型对象都包含一个指向构造函数的指针（<code>constructor</code>），而实例都包含一个指向原型对象的内部指针成为隐式原型（<code>__proto__</code>）。</p>
-<h3 id="组合继承">组合继承</h3><p><pre><br><code><br>//父类<br>function Parent() {<br>    this.name = ‘parent’;<br>}</p>
-<p>Parent.prototype.getName = function() {<br>    console.log(this.name);<br>}</p>
-<p>//子类<br>function Child() {<br>    //继承父类的属性<br>    Parent.call(this);          //第二次调用Parent()<br>}</p>
-<p>//子类的原型 指向父类的实例对象<br>Child.prototype = new Parent(); //第一次调用Parent()<br>//修正子类的constructor指向<br>Child.prototype.constructor = Child;<br></code><br></pre><br>
+<h3 id="组合继承">组合继承</h3><pre><code><span class="comment">//父类</span>
+<span class="function"><span class="keyword">function</span> <span class="title">Parent</span><span class="params">()</span> </span>{
+    <span class="keyword">this</span>.name = <span class="string">'parent'</span>;
+}
+
+Parent.prototype.getName = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);
+}
+
+<span class="comment">//子类</span>
+<span class="function"><span class="keyword">function</span> <span class="title">Child</span><span class="params">()</span> </span>{
+    <span class="comment">//继承父类的属性</span>
+    Parent.call(<span class="keyword">this</span>);          <span class="comment">//第二次调用Parent()</span>
+}
+
+<span class="comment">//子类的原型 指向父类的实例对象</span>
+Child.prototype = <span class="keyword">new</span> Parent(); <span class="comment">//第一次调用Parent()</span>
+<span class="comment">//修正子类的constructor指向</span>
+Child.prototype.constructor = Child;
+</code></pre>
       
     </div>
     

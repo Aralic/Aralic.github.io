@@ -7,22 +7,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="在js中继承主要是依靠原形链来实现。如果不了解原型相关知识，建议读者先去了解原形链。
 每个构造函数都有一个原型对象（prototype），原型对象都包含一个指向构造函数的指针（constructor），而实例都包含一个指向原型对象的内部指针成为隐式原型（__proto__）。
-组合继承//父类function Parent() {    this.name = ‘parent’;}
-Parent.">
+组合继承//父类
+function Parent() {
+    this.name = &apos;parent&apos;;
+}
+
+Par">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅析js中的继承">
 <meta property="og:url" content="http://yoursite.com/2015/05/16/浅析js中的继承/index.html">
 <meta property="og:site_name" content="Aralic的博客">
 <meta property="og:description" content="在js中继承主要是依靠原形链来实现。如果不了解原型相关知识，建议读者先去了解原形链。
 每个构造函数都有一个原型对象（prototype），原型对象都包含一个指向构造函数的指针（constructor），而实例都包含一个指向原型对象的内部指针成为隐式原型（__proto__）。
-组合继承//父类function Parent() {    this.name = ‘parent’;}
-Parent.">
+组合继承//父类
+function Parent() {
+    this.name = &apos;parent&apos;;
+}
+
+Par">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅析js中的继承">
 <meta name="twitter:description" content="在js中继承主要是依靠原形链来实现。如果不了解原型相关知识，建议读者先去了解原形链。
 每个构造函数都有一个原型对象（prototype），原型对象都包含一个指向构造函数的指针（constructor），而实例都包含一个指向原型对象的内部指针成为隐式原型（__proto__）。
-组合继承//父类function Parent() {    this.name = ‘parent’;}
-Parent.">
+组合继承//父类
+function Parent() {
+    this.name = &apos;parent&apos;;
+}
+
+Par">
   
     <link rel="alternative" href="/atom.xml" title="Aralic的博客" type="application/atom+xml">
   
@@ -200,7 +212,7 @@ Parent.">
   
     <div class="article-meta">
       <a href="/2015/05/16/浅析js中的继承/" class="article-date">
-  	<time datetime="2015-05-16T15:22:02.942Z" itemprop="datePublished">2015-05-16</time>
+  	<time datetime="2015-05-16T15:29:35.178Z" itemprop="datePublished">2015-05-16</time>
 </a>
     </div>
   
@@ -235,21 +247,77 @@ Parent.">
       
         <p>在js中<strong>继承</strong>主要是依靠原形链来实现。如果不了解原型相关知识，建议读者先去了解<a href="http://www.cnblogs.com/Aralic/p/4466343.html" target="_blank" rel="external">原形链</a>。</p>
 <p>每个构造函数都有一个原型对象（<code>prototype</code>），原型对象都包含一个指向构造函数的指针（<code>constructor</code>），而实例都包含一个指向原型对象的内部指针成为隐式原型（<code>__proto__</code>）。</p>
-<h3 id="组合继承">组合继承</h3><p><pre><br><code><br>//父类<br>function Parent() {<br>    this.name = ‘parent’;<br>}</code></pre></p>
-<p>Parent.prototype.getName = function() {<br>    console.log(this.name);<br>}</p>
-<p>//子类<br>function Child() {<br>    //继承父类的属性<br>    Parent.call(this);          //第二次调用Parent()<br>}</p>
-<p>//子类的原型 指向父类的实例对象<br>Child.prototype = new Parent(); //第一次调用Parent()<br>//修正子类的constructor指向<br>Child.prototype.constructor = Child;<br><br><br><a id="more"></a></p>
-<h3 id="原型继承">原型继承</h3><p><pre><br><code><br>//父类<br>var parent = {<br>    name: ‘parent’<br>    getName: function() {<br>        console.log(this.name);<br>    }<br>};</code></pre></p>
-<p>//代理中介<br>function object(o) {<br>    var F = function(){};<br>    F.prototype = o;<br>    return new F();<br>}</p>
-<p>//子类<br>var child = object(parent);<br><br></p>
-<h3 id="寄生式组合继承">寄生式组合继承</h3><p> 结合第一、二中方法，我们实现了更高校的第三种寄生组合式继承。</p>
-<p><pre><br><code><br>//父类<br>function Parent() {<br>    this.name = ‘parent’;<br>}</code></pre></p>
-<p>Parent.prototype.getName = function() {<br>    console.log(this.name);<br>}</p>
-<p>//代理中介<br>function object(o) {<br>    var F = function(){};<br>    F.prototype = o;<br>    return new F();<br>}</p>
-<p>//子类原型 继承父类的原型<br>function inhertPrototype(Parent, Child) {<br>    var prototype = obj(Parent.prototype);<br>    prototype.constructor = Child;<br>    Child.prototype = prototype;<br>}</p>
-<p>//子类<br>function Child() {<br>    //继承父类的属性<br>    Parent.call(this);<br>}</p>
-<p>//子类继承父类<br>inhertPrototype(Parent, Child);</p>
-<p><br><br>关注我的微博：<a href="http://weibo.com/u/3059735367" target="_blank" rel="external">http://weibo.com/u/3059735367</a><br>关注我的github博客：<a href="http://aralic.github.io/" target="_blank" rel="external">http://aralic.github.io/</a></p>
+<h3 id="组合继承">组合继承</h3><pre><code><span class="comment">//父类</span>
+<span class="function"><span class="keyword">function</span> <span class="title">Parent</span><span class="params">()</span> </span>{
+    <span class="keyword">this</span>.name = <span class="string">'parent'</span>;
+}
+
+Parent.prototype.getName = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);
+}
+
+<span class="comment">//子类</span>
+<span class="function"><span class="keyword">function</span> <span class="title">Child</span><span class="params">()</span> </span>{
+    <span class="comment">//继承父类的属性</span>
+    Parent.call(<span class="keyword">this</span>);          <span class="comment">//第二次调用Parent()</span>
+}
+
+<span class="comment">//子类的原型 指向父类的实例对象</span>
+Child.prototype = <span class="keyword">new</span> Parent(); <span class="comment">//第一次调用Parent()</span>
+<span class="comment">//修正子类的constructor指向</span>
+Child.prototype.constructor = Child;
+</code></pre><a id="more"></a>
+<h3 id="原型继承">原型继承</h3><pre><code><span class="comment">//父类</span>
+<span class="keyword">var</span> parent = {
+    name: <span class="string">'parent'</span>
+    getName: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);
+    }
+};
+
+<span class="comment">//代理中介</span>
+<span class="function"><span class="keyword">function</span> <span class="title">object</span><span class="params">(o)</span> </span>{
+    <span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{};
+    F.prototype = o;
+    <span class="keyword">return</span> <span class="keyword">new</span> F();
+}
+
+<span class="comment">//子类</span>
+<span class="keyword">var</span> child = object(parent);
+</code></pre><h3 id="寄生式组合继承">寄生式组合继承</h3><p> 结合第一、二中方法，我们实现了更高校的第三种寄生组合式继承。</p>
+<pre><code><span class="comment">//父类</span>
+<span class="function"><span class="keyword">function</span> <span class="title">Parent</span><span class="params">()</span> </span>{
+    <span class="keyword">this</span>.name = <span class="string">'parent'</span>;
+}
+
+Parent.prototype.getName = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);
+}
+
+
+<span class="comment">//代理中介</span>
+<span class="function"><span class="keyword">function</span> <span class="title">object</span><span class="params">(o)</span> </span>{
+    <span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{};
+    F.prototype = o;
+    <span class="keyword">return</span> <span class="keyword">new</span> F();
+}
+
+<span class="comment">//子类原型 继承父类的原型 </span>
+<span class="function"><span class="keyword">function</span> <span class="title">inhertPrototype</span><span class="params">(Parent, Child)</span> </span>{
+    <span class="keyword">var</span> prototype = obj(Parent.prototype);
+    prototype.constructor = Child;
+    Child.prototype = prototype;
+}
+
+<span class="comment">//子类</span>
+<span class="function"><span class="keyword">function</span> <span class="title">Child</span><span class="params">()</span> </span>{
+    <span class="comment">//继承父类的属性</span>
+    Parent.call(<span class="keyword">this</span>);  
+}
+
+<span class="comment">//子类继承父类</span>
+inhertPrototype(Parent, Child);
+</code></pre><p>关注我的微博：<a href="http://weibo.com/u/3059735367" target="_blank" rel="external">http://weibo.com/u/3059735367</a><br>关注我的github博客：<a href="http://aralic.github.io/" target="_blank" rel="external">http://aralic.github.io/</a></p>
 
       
     </div>
