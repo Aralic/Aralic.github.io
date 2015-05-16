@@ -3,53 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>js类型检测 | Aralic的博客</title>
+  <title>CSS预处理之Less | Aralic的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="大约是三月初吧，在网上看到一道面试题，怎么判断一个变量类型是不是数组。然后从犀牛书以及查阅一些资料得到了答案。
-这里分为四种情况分析：
-通过constructor
- [].constructor === Array; //true
-
-
-这种方法比较坑，不推荐，因为constructor是可以自己修改的。
-
-通过instanceof
-[] instanceof Array; //true
-
-
-犀牛书">
+  <meta name="description" content="CSS预处理之Lesscss预处理，趁这几天有空，了解一下css预处理的知识，为task4打一点基础。
+less简介Less 是一个Css 预编译器,意思指的是它可以扩展Css语言,添加功能如允许变量(variables),混合(mixins),函数(functions) 和许多其他的技术，让你的Css更具维护性，主题性，扩展性。
+Less 可运行在 Node 环境,浏览器环境和Rhino环境.同">
 <meta property="og:type" content="article">
-<meta property="og:title" content="js类型检测">
-<meta property="og:url" content="http://yoursite.com/2015/05/01/js类型检测/index.html">
+<meta property="og:title" content="CSS预处理之Less">
+<meta property="og:url" content="http://yoursite.com/2015/05/16/CSS预处理之Less/index.html">
 <meta property="og:site_name" content="Aralic的博客">
-<meta property="og:description" content="大约是三月初吧，在网上看到一道面试题，怎么判断一个变量类型是不是数组。然后从犀牛书以及查阅一些资料得到了答案。
-这里分为四种情况分析：
-通过constructor
- [].constructor === Array; //true
-
-
-这种方法比较坑，不推荐，因为constructor是可以自己修改的。
-
-通过instanceof
-[] instanceof Array; //true
-
-
-犀牛书">
+<meta property="og:description" content="CSS预处理之Lesscss预处理，趁这几天有空，了解一下css预处理的知识，为task4打一点基础。
+less简介Less 是一个Css 预编译器,意思指的是它可以扩展Css语言,添加功能如允许变量(variables),混合(mixins),函数(functions) 和许多其他的技术，让你的Css更具维护性，主题性，扩展性。
+Less 可运行在 Node 环境,浏览器环境和Rhino环境.同">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="js类型检测">
-<meta name="twitter:description" content="大约是三月初吧，在网上看到一道面试题，怎么判断一个变量类型是不是数组。然后从犀牛书以及查阅一些资料得到了答案。
-这里分为四种情况分析：
-通过constructor
- [].constructor === Array; //true
-
-
-这种方法比较坑，不推荐，因为constructor是可以自己修改的。
-
-通过instanceof
-[] instanceof Array; //true
-
-
-犀牛书">
+<meta name="twitter:title" content="CSS预处理之Less">
+<meta name="twitter:description" content="CSS预处理之Lesscss预处理，趁这几天有空，了解一下css预处理的知识，为task4打一点基础。
+less简介Less 是一个Css 预编译器,意思指的是它可以扩展Css语言,添加功能如允许变量(variables),混合(mixins),函数(functions) 和许多其他的技术，让你的Css更具维护性，主题性，扩展性。
+Less 可运行在 Node 环境,浏览器环境和Rhino环境.同">
   
     <link rel="alternative" href="/atom.xml" title="Aralic的博客" type="application/atom+xml">
   
@@ -223,11 +193,11 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-js类型检测" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-CSS预处理之Less" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/05/01/js类型检测/" class="article-date">
-  	<time datetime="2015-05-01T05:58:32.000Z" itemprop="datePublished">2015-05-01</time>
+      <a href="/2015/05/16/CSS预处理之Less/" class="article-date">
+  	<time datetime="2015-05-16T10:27:22.000Z" itemprop="datePublished">2015-05-16</time>
 </a>
     </div>
   
@@ -240,7 +210,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      js类型检测
+      CSS预处理之Less
     </h1>
   
 
@@ -249,7 +219,7 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/类型/">类型</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/">css</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/预处理/">预处理</a></li></ul>
 	</div>
 
         
@@ -260,43 +230,155 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>大约是三月初吧，在网上看到一道面试题，怎么判断一个变量类型是不是数组。然后从犀牛书以及查阅一些资料得到了答案。</p>
-<h4 id="这里分为四种情况分析：">这里分为四种情况分析：</h4><ol>
-<li><p>通过constructor</p>
-<p> [].constructor === Array; //true</p>
-</li>
-</ol>
-<p>这种方法比较坑，不推荐，因为constructor是可以自己修改的。</p>
-<ol>
-<li><p>通过instanceof</p>
-<p>[] instanceof Array; //true</p>
-</li>
-</ol>
-<p>犀牛书给出的解释是在页面中含多个窗体或者iframe，那么会产生很多执行环境，一个iframe下的数组不是另一个窗体下构造函数的实例。那么如果出现这种极端条件，instanceof也不推荐使用。</p>
-<ol>
-<li>通过Array.isArray<a id="more"></a>
-在新版浏览器，IE9+都已经实现了原生方法</li>
-</ol>
-<p>Array.isArray([1,2]); //true</p>
-<ol>
-<li><p>通过toSting</p>
-<p> Object.prototype.toString.call([]) === ‘[object Array]’</p>
-<p>在一些博客和犀牛书给出的都是这种方法。</p>
-<p>因为之前对call语法，toString方法的疑惑，导致我只能死记硬背这句代码。最近在回顾继承有关知识，学到了call方法，这段代码意思是对[]调用Object对象原型下的toString方法，不同于数组原型下的toString的方法，之所以疑惑，因为数组下的toString是把一个数组转成字符串。为了屏蔽掉call方法的干扰。</p>
-<p> 我做了一个小处理</p>
-<p> Array.prototype.toString = Object.prototype.toString;<br> [].toString(); // “[object Array]”</p>
-</li>
-</ol>
-<p>验证出来了call的作用方法，同时也得出Array原型重写了toString方法（原型链关系推出来的）紧接着，我去了<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/toString" target="_blank" rel="external">MDN</a>查阅Object原型的toString方法，看看这究竟是什么鬼？原来这个返回对象类型字符串。同时像时间对象，正则对象，数学对象等等都能返回出来。</p>
-<pre><code><span class="keyword">var</span> <span class="built_in">toString</span> = <span class="type">Object</span>.prototype.<span class="built_in">toString</span>;
-<span class="built_in">toString</span>.call(<span class="keyword">new</span> <span class="type">Date</span>); <span class="comment">// [object Date]</span>
-<span class="built_in">toString</span>.call(<span class="keyword">new</span> <span class="type">String</span>); <span class="comment">// [object String]</span>
-<span class="built_in">toString</span>.call(<span class="type">Math</span>); <span class="comment">// [object Math]</span>
+        <h1 id="CSS预处理之Less">CSS预处理之Less</h1><p>css预处理，趁这几天有空，了解一下css预处理的知识，为task4打一点基础。</p>
+<h3 id="less简介">less简介</h3><p>Less 是一个Css 预编译器,意思指的是它可以扩展Css语言,添加功能如允许变量(variables),混合(mixins),函数(functions) 和许多其他的技术，让你的Css更具维护性，主题性，扩展性。</p>
+<p>Less 可运行在 Node 环境,浏览器环境和Rhino环境.同时也有3种可选工具供你编译文件和监视任何改变。</p>
+<h3 id="语法">语法</h3><ul>
+<li><p>变量</p>
+<p>声明一个变量：</p>
+<pre>
+<code>
+@width：100px；
+.test {
+ width: @width;
+}
+</code>
+</pre>
 
-<span class="comment">//Since JavaScript 1.8.5</span>
-<span class="built_in">toString</span>.call(undefined); <span class="comment">// [object Undefined]</span>
-<span class="built_in">toString</span>.call(null); <span class="comment">// [object Null]</span>
-</code></pre><p>好强大的样子！不过为什么官方取这个名字，好容易让人疑惑？？？</p>
+
+</li>
+</ul>
+<ul>
+<li>混合</li>
+</ul>
+<pre>
+<code>
+.border {
+    border: 1px solid red;
+}
+
+.test {
+    width: @box_width;
+    height: 100px;
+    background: #ccc;
+    .border;  //直接混合使用
+}    
+</code>
+</pre>
+
+<ul>
+<li>嵌套</li>
+</ul>
+<p>正常写法</p>
+<pre><code><span class="class">.test</span> <span class="rules">{
+  <span class="rule"><span class="attribute">font-size</span>:<span class="value"> <span class="number">10px</span></span></span>;
+}</span>
+. <span class="tag">test</span> <span class="tag">a</span> <span class="rules">{
+  <span class="rule"><span class="attribute">color</span>:<span class="value"> red</span></span>;
+}</span>
+</code></pre><p>less 写法：</p>
+<pre><code><span class="class">.test</span> {
+   <span class="attribute">font-size</span>: <span class="number">10px</span>;
+<span class="tag">a</span> {
+  <span class="attribute">color</span>: red;
+  }
+}
+</code></pre><p>同样可以包含伪类：</p>
+<pre><code><span class="class">.test</span> {
+    <span class="attribute">font-size</span>: <span class="number">10px</span>;
+    <span class="tag">a</span> {
+       <span class="keyword">&amp;</span><span class="pseudo">:hover</span> {
+          <span class="attribute">color</span>: blue;
+       }
+      <span class="attribute">color</span>: red;
+    }
+}
+</code></pre><ul>
+<li>运算</li>
+</ul>
+<pre>
+<code>
+@width: 5px;
+.test {
+ width: @width + 10;  //15px
+}
+</code>
+</pre>
+
+<p>less能推断此处的单位</p>
+<ul>
+<li>函数</li>
+</ul>
+<pre>
+<code>
+.border_radius(@width:5px) { //5px是可选参数，表示默认值
+    -webkit-border-radius: @width;
+    -moz-border-radius: @width;
+    -ms-border-radius: @width;
+    border-radius: @width;
+}
+
+.test {
+    .border_radius(20px);  
+}
+</code>
+</pre>
+
+<ul>
+<li>命名空间<pre>
+<code>
+.bundle {
+.button {
+ display: block;
+ border: 1px solid black;
+ background-color: grey;
+ &:hover {
+   background-color: white
+ }
+}
+}
+</code>
+</pre>
+
+</li>
+</ul>
+<p>//现在如果我们想在 .header a 中混合 .button 类，那么我们可以这样做：</p>
+<pre><code><span class="class">.header</span> <span class="tag">a</span> {
+  <span class="attribute">color</span>: orange;
+  <span class="class">.bundle</span> &gt; <span class="class">.button</span>;
+}
+</code></pre><ul>
+<li>作用域</li>
+</ul>
+<pre>
+<code>
+@var: red;
+.page {
+  #header {
+    color: @var; // white
+  }
+  @var: white;
+}
+</code>
+</pre>
+
+<ul>
+<li>避免编译</li>
+</ul>
+<pre>
+<code>
+.test {
+    width: ~'calc(300px - 30px)';
+}
+</code>
+</pre>
+
+
+<ul>
+<li>注释</li>
+</ul>
+<p>//不会被编译css<br>/**/会被编辑到css</p>
+<p>更多使用语法，请查看less中文网。<br><a href="http://lesscss.net/" target="_blank" rel="external">http://lesscss.net/</a></p>
 
       
     </div>
@@ -306,18 +388,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/05/12/浅析js中的this/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          浅析js中的this
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/04/29/javascript原型学习笔记/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">js原型笔记</div>
+    <a href="/2015/05/12/浅析js中的闭包/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">浅析js中的闭包</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -346,7 +419,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="js类型检测" data-title="js类型检测" data-url="http://yoursite.com/2015/05/01/js类型检测/"></div>
+	<div class="ds-thread" data-thread-key="CSS预处理之Less" data-title="CSS预处理之Less" data-url="http://yoursite.com/2015/05/16/CSS预处理之Less/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
