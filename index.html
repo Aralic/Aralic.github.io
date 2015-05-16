@@ -113,7 +113,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/css/" style="font-size: 10px;">css</a><a href="/tags/javascript/" style="font-size: 20px;">javascript</a><a href="/tags/原型/" style="font-size: 10px;">原型</a><a href="/tags/类型/" style="font-size: 15px;">类型</a><a href="/tags/闭包/" style="font-size: 10px;">闭包</a><a href="/tags/预处理/" style="font-size: 10px;">预处理</a>
+						<a href="/tags/css/" style="font-size: 10px;">css</a><a href="/tags/javascript/" style="font-size: 20px;">javascript</a><a href="/tags/原型/" style="font-size: 10px;">原型</a><a href="/tags/类型/" style="font-size: 15px;">类型</a><a href="/tags/继承/" style="font-size: 10px;">继承</a><a href="/tags/闭包/" style="font-size: 10px;">闭包</a><a href="/tags/预处理/" style="font-size: 10px;">预处理</a>
 					</div>
 				</section>
 				
@@ -188,6 +188,67 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-浅析js中的继承" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/05/16/浅析js中的继承/" class="article-date">
+  	<time datetime="2015-05-16T15:22:02.942Z" itemprop="datePublished">2015-05-16</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/05/16/浅析js中的继承/">浅析js中的继承</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在js中<strong>继承</strong>主要是依靠原形链来实现。如果不了解原型相关知识，建议读者先去了解<a href="http://www.cnblogs.com/Aralic/p/4466343.html">原形链</a>。</p>
+<p>每个构造函数都有一个原型对象（<code>prototype</code>），原型对象都包含一个指向构造函数的指针（<code>constructor</code>），而实例都包含一个指向原型对象的内部指针成为隐式原型（<code>__proto__</code>）。</p>
+<h3 id="组合继承">组合继承</h3><p><pre><br><code><br>//父类<br>function Parent() {<br>    this.name = ‘parent’;<br>}</p>
+<p>Parent.prototype.getName = function() {<br>    console.log(this.name);<br>}</p>
+<p>//子类<br>function Child() {<br>    //继承父类的属性<br>    Parent.call(this);          //第二次调用Parent()<br>}</p>
+<p>//子类的原型 指向父类的实例对象<br>Child.prototype = new Parent(); //第一次调用Parent()<br>//修正子类的constructor指向<br>Child.prototype.constructor = Child;<br></code><br></pre><br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/继承/">继承</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/05/16/浅析js中的继承/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-CSS预处理之Less" class="article article-type-post" itemscope itemprop="blogPost">
   
