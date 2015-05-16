@@ -260,7 +260,8 @@ var aaa = foo();">
 aaa();  <span class="comment">//2</span>
 aaa();  <span class="comment">//3</span>
 </code></pre><p>其实这个代码不难理解，aaa是指向foo()返回的一个新函数，但是在这个函数里面引用了a变量，所以当执行完foo函数时，变量a还存在内存中不释放。即a分别为2和3。</p>
-<h3 id="函数作为参数：">函数作为参数：</h3><pre><code><span class="keyword">var</span> a = <span class="number">10</span>;
+<h3 id="函数作为参数：">函数作为参数：</h3><a id="more"></a>
+<pre><code><span class="keyword">var</span> a = <span class="number">10</span>;
 <span class="function"><span class="keyword">function</span> <span class="title">foo</span> <span class="params">()</span> </span>{
 <span class="built_in">console</span>.log(a);
 }
