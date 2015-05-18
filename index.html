@@ -113,7 +113,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/css/" style="font-size: 10px;">css</a><a href="/tags/javascript/" style="font-size: 20px;">javascript</a><a href="/tags/原型/" style="font-size: 10px;">原型</a><a href="/tags/类型/" style="font-size: 15px;">类型</a><a href="/tags/继承/" style="font-size: 10px;">继承</a><a href="/tags/闭包/" style="font-size: 10px;">闭包</a><a href="/tags/预处理/" style="font-size: 10px;">预处理</a>
+						<a href="/tags/css/" style="font-size: 10px;">css</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/javascript/" style="font-size: 20px;">javascript</a><a href="/tags/原型/" style="font-size: 10px;">原型</a><a href="/tags/类型/" style="font-size: 15px;">类型</a><a href="/tags/继承/" style="font-size: 10px;">继承</a><a href="/tags/闭包/" style="font-size: 10px;">闭包</a><a href="/tags/预处理/" style="font-size: 10px;">预处理</a>
 					</div>
 				</section>
 				
@@ -188,6 +188,90 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-git常见指令" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/05/18/git常见指令/" class="article-date">
+  	<time datetime="2015-05-18T00:12:20.172Z" itemprop="datePublished">2015-05-18</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/05/18/git常见指令/">git常见指令</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>mkdir name  //创建项目</p>
+<p>cd name     //进入项目</p>
+<p>ped         //显示当前目录</p>
+<p>git init    //初始化 让这个目录成为git仓库</p>
+<p>git add readme.txt //添加文件到仓库</p>
+<p>git commit -m “update info” //从缓冲区提交</p>
+<p>git status //查看仓库当前状态</p>
+<p>git diff readme.txt //查看这个文件哪个地方修改了</p>
+<p>git log     //查看工作日志 //q退出</p>
+<p>git log —pretty=oneline //单行输入日志</p>
+<p>git reset —hard HEAD^ //退回上一个版本</p>
+<p>git reset —hard 3628164 //退回具体版本</p>
+<p>git reflog //记录每一次命令</p>
+<p>//HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令git reset —hard commit_id。</p>
+<p>//穿梭前，用git log可以查看提交历史，以便确定要回退到哪个版本。</p>
+<p>//要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。</p>
+<p>rm test.txt //删除文件</p>
+<p>git checkout test.txt//从版本库恢复</p>
+<p>git rm test.txt //版本库删除</p>
+<p>//先有本地库 后有远程库<br>git remote add origin git@github.com:Aralic/learngit.git //关联远程库</p>
+<p>git push -u origin master// 本地同步到github上</p>
+<p>//先有远程库 克隆到本地<br>git clone git@github.com:Arliac/gitskills.git </p>
+<p>git checkout -b dev //创建分支</p>
+<p>git checkout master //切换回master 分支</p>
+<p>git branch  //查看当前分支</p>
+<p>git merge dev //在master分支下 合并dev分支</p>
+<p>git branch -d dev //删除dev分支</p>
+<p>//当你从远程仓库克隆时，实际上Git自动把本地的master分支和远程的master分支对应起来了，并且，远程仓库的默认名称是origin。</p>
+<p>git remote //查看远程库</p>
+<p>git remote -v// 查看更详细信息</p>
+<p>git push origin master//推送分支</p>
+<p>git push origin dev //推送分支</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-浅析js中的继承" class="article article-type-post" itemscope itemprop="blogPost">
   
