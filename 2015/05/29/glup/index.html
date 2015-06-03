@@ -7,32 +7,15 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>浅析js中的继承 | Aralic的博客</title>
+    <title>gulp学习 | Aralic的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Aralic">
     
-    <meta name="description" content="在js中继承主要是依靠原形链来实现。如果不了解原型相关知识，建议读者先去了解原形链。
-每个构造函数都有一个原型对象（prototype），原型对象都包含一个指向构造函数的指针（constructor），而实例都包含一个指向原型对象的内部指针成为隐式原型（__proto__）。
-组合继承//父类
-function Parent() {
-    this.name = &#39;parent&#39;;
-}
-
-Parent.prototype.getName = function() {
-    console.log(this.name);
-}
-
-//子类
-function Child() {
-    //继承父类的属性
-    Parent.call(this);          //第二次调用Parent()
-}
-
-//子类的原型 指向父类的实例对象
-Child.prototype = new Parent(); //第一次调用Parent()
-//修正子类的constructor指向
-Child.prototype.constructor = Child;">
+    <meta name="description" content="想学习一下怎么使用gulp，找了几篇博客，一开始就放大招，js压缩，css压缩，sass编译，less编译，拼接等等全堆积上来。 对于我这种之前没接触过任务自动管理工具的人来说，感觉像看电影快进一样，只要中途有不理解的就要断篇。
+gulp安装
+安装gulp 如果参数-g 表示全局安装
+  $ npm">
     
     
     
@@ -94,15 +77,15 @@ Child.prototype.constructor = Child;">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/05/18/浅析js中的继承/" title="浅析js中的继承" itemprop="url">浅析js中的继承</a>
+      <a href="/2015/05/29/glup/" title="gulp学习" itemprop="url">gulp学习</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Aralic">Aralic</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-05-18T00:10:44.862Z" itemprop="datePublished">2015-05-18</time>
-    更新日期:<time datetime="2015-05-16T15:29:15.675Z" itemprop="dateModified">2015-05-16</time>
+    <time datetime="2015-05-29T08:43:32.000Z" itemprop="datePublished">2015-05-29</time>
+    更新日期:<time datetime="2015-05-29T08:44:03.225Z" itemprop="dateModified">2015-05-29</time>
     
   </p>
 </header>
@@ -111,89 +94,111 @@ Child.prototype.constructor = Child;">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#组合继承"><span class="toc-number">1.</span> <span class="toc-text">组合继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#原型继承"><span class="toc-number">2.</span> <span class="toc-text">原型继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#寄生式组合继承"><span class="toc-number">3.</span> <span class="toc-text">寄生式组合继承</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#gulp安装"><span class="toc-number">1.</span> <span class="toc-text">gulp安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#新建文件目录"><span class="toc-number">2.</span> <span class="toc-text">新建文件目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开始构建项目"><span class="toc-number">3.</span> <span class="toc-text">开始构建项目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实时更新压缩文件"><span class="toc-number">4.</span> <span class="toc-text">实时更新压缩文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gulp模块"><span class="toc-number">5.</span> <span class="toc-text">gulp模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#参考链接"><span class="toc-number">6.</span> <span class="toc-text">参考链接</span></a></li></ol>
 		</div>
 		
-		<p>在js中<strong>继承</strong>主要是依靠原形链来实现。如果不了解原型相关知识，建议读者先去了解<a href="http://www.cnblogs.com/Aralic/p/4466343.html" target="_blank" rel="external">原形链</a>。</p>
-<p>每个构造函数都有一个原型对象（<code>prototype</code>），原型对象都包含一个指向构造函数的指针（<code>constructor</code>），而实例都包含一个指向原型对象的内部指针成为隐式原型（<code>__proto__</code>）。</p>
-<h3 id="组合继承">组合继承</h3><pre><code><span class="comment">//父类</span>
-<span class="function"><span class="keyword">function</span> <span class="title">Parent</span><span class="params">()</span> </span>{
-    <span class="keyword">this</span>.name = <span class="string">'parent'</span>;
-}
+		<p>想学习一下怎么使用gulp，找了几篇博客，一开始就放大招，js压缩，css压缩，sass编译，less编译，拼接等等全堆积上来。 对于我这种之前没接触过任务自动管理工具的人来说，感觉像看电影快进一样，只要中途有不理解的就要断篇。</p>
+<h4 id="gulp安装">gulp安装</h4><ul>
+<li><p>安装gulp 如果参数-g 表示全局安装</p>
+<p>  $ npm install gulp</p>
+<p>  $ npm install gulp —save-dev</p>
+</li>
+</ul>
+<h4 id="新建文件目录">新建文件目录</h4><p><img src="http://i.imgur.com/He1c4dk.png" alt=""></p>
+<ul>
+<li>dist: 压缩后的线上代码</li>
+<li>src: 生产环境的本地源代码</li>
+<li>gulpfile.js: gulp的配置文件，在根目录中</li>
+</ul>
+<h4 id="开始构建项目">开始构建项目</h4><p>现有目录：</p>
+<pre>
+└── src/
+    └── js/
+        └── a.js
+</pre>
 
-Parent.prototype.getName = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
-    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);
-}
+<p>任务：</p>
+<ol>
+<li>找到src目录下的js文件下的js文件</li>
+<li>压缩这些js文件</li>
+<li>压缩后的代码输出到dist/js/目录下</li>
+</ol>
+<p>开始任务：</p>
+<ol>
+<li>因为现在需要压缩js文件，所以需要安装gulp-uglify模块</li>
+<li>npm install gulp-uglify</li>
+<li>在根目录下新建并编辑gulpfile.js</li>
+</ol>
+<p>gulpfile.js代码如下</p>
+<pre>
+//获取gulp
+var gulp = require('gulp');
+var uglify = require('gulp-uglify');
 
-<span class="comment">//子类</span>
-<span class="function"><span class="keyword">function</span> <span class="title">Child</span><span class="params">()</span> </span>{
-    <span class="comment">//继承父类的属性</span>
-    Parent.call(<span class="keyword">this</span>);          <span class="comment">//第二次调用Parent()</span>
-}
+//压缩js文件
+gulp.task('script', function() {
+    //1.找到文件 *是通配符，表示找到所有的js文件
+    gulp.src('src/js/*.js')
+    //2.压缩文件
+    .pipe(uglify())
+    //3.另存压缩后文件
+    .pipe(gulp.dest('dist/js'))
+});
 
-<span class="comment">//子类的原型 指向父类的实例对象</span>
-Child.prototype = <span class="keyword">new</span> Parent(); <span class="comment">//第一次调用Parent()</span>
-<span class="comment">//修正子类的constructor指向</span>
-Child.prototype.constructor = Child;
-</code></pre><a id="more"></a>
-<h3 id="原型继承">原型继承</h3><pre><code><span class="comment">//父类</span>
-<span class="keyword">var</span> parent = {
-    name: <span class="string">'parent'</span>
-    getName: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
-        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);
-    }
-};
+</pre>
 
-<span class="comment">//代理中介</span>
-<span class="function"><span class="keyword">function</span> <span class="title">object</span><span class="params">(o)</span> </span>{
-    <span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{};
-    F.prototype = o;
-    <span class="keyword">return</span> <span class="keyword">new</span> F();
-}
+<p>执行压缩任务：</p>
+<p>在命令行输入 gulp script</p>
+<p>在dist/js/下就能看压缩后的文件了。</p>
+<h4 id="实时更新压缩文件">实时更新压缩文件</h4><pre>
+//获取gulp
+var gulp = require('gulp');
+var uglify = require('gulp-uglify');
 
-<span class="comment">//子类</span>
-<span class="keyword">var</span> child = object(parent);
-</code></pre><h3 id="寄生式组合继承">寄生式组合继承</h3><p> 结合第一、二中方法，我们实现了更高校的第三种寄生组合式继承。</p>
-<pre><code><span class="comment">//父类</span>
-<span class="function"><span class="keyword">function</span> <span class="title">Parent</span><span class="params">()</span> </span>{
-    <span class="keyword">this</span>.name = <span class="string">'parent'</span>;
-}
+//压缩js文件
+gulp.task('script', function() {
+    //1.找到文件 *是通配符，表示找到所有的js文件
+    gulp.src('src/js/*.js')
+    //2.压缩文件
+    .pipe(uglify())
+    //3.另存压缩后文件
+    .pipe(gulp.dest('dist/js'))
+});
 
-Parent.prototype.getName = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
-    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);
-}
+//在命令行使用gulp启动此任务
+gulp.task('watchjs', function() {
+    //监听文件修改，当文件修改则执行script任务
+    gulp.watch('src/js/*.js', ['script']);
+});
 
+//在命令行 输入gulp  等于输入gulp default
+//在此处会同时执行script任务和watchjs任务
+gulp.task('default', ["script", "watchjs"]);
+</pre>
 
-<span class="comment">//代理中介</span>
-<span class="function"><span class="keyword">function</span> <span class="title">object</span><span class="params">(o)</span> </span>{
-    <span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{};
-    F.prototype = o;
-    <span class="keyword">return</span> <span class="keyword">new</span> F();
-}
-
-<span class="comment">//子类原型 继承父类的原型 </span>
-<span class="function"><span class="keyword">function</span> <span class="title">inhertPrototype</span><span class="params">(Parent, Child)</span> </span>{
-    <span class="keyword">var</span> prototype = obj(Parent.prototype);
-    prototype.constructor = Child;
-    Child.prototype = prototype;
-}
-
-<span class="comment">//子类</span>
-<span class="function"><span class="keyword">function</span> <span class="title">Child</span><span class="params">()</span> </span>{
-    <span class="comment">//继承父类的属性</span>
-    Parent.call(<span class="keyword">this</span>);  
-}
-
-<span class="comment">//子类继承父类</span>
-inhertPrototype(Parent, Child);
-</code></pre><p>关注我的微博：<a href="http://weibo.com/u/3059735367" target="_blank" rel="external">http://weibo.com/u/3059735367</a><br>关注我的github博客：<a href="http://aralic.github.io/" target="_blank" rel="external">http://aralic.github.io/</a></p>
+<p>其他模块的使用也差不多类似。</p>
+<h4 id="gulp模块">gulp模块</h4><ul>
+<li>编译Sass (gulp-ruby-sass)</li>
+<li>Autoprefixer (gulp-autoprefixer)</li>
+<li>缩小化(minify)CSS (gulp-minify-css)</li>
+<li>JSHint (gulp-jshint)</li>
+<li>拼接 (gulp-concat)</li>
+<li>丑化(Uglify) (gulp-uglify)</li>
+<li>图片压缩 (gulp-imagemin)</li>
+<li>即时重整(LiveReload) (gulp-livereload)</li>
+<li>清理档案 (gulp-clean)</li>
+<li>图片快取，只有更改过得图片会进行压缩 (gulp-cache)</li>
+<li>更动通知 (gulp-notify)</li>
+</ul>
+<h4 id="参考链接">参考链接</h4><p><a href="https://github.com/nimojs/gulp-book" target="_blank" rel="external">Gulp 入门指南</a></p>
+<p><a href="http://www.open-open.com/lib/view/open1417068223049.html" target="_blank" rel="external">进阶</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/javascript/">javascript</a><a href="/tags/继承/">继承</a>
+  <span></span> <a href="/tags/gulp/">gulp</a><a href="/tags/tool/">tool</a>
   </div>
 
 
@@ -201,7 +206,7 @@ inhertPrototype(Parent, Child);
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/05/18/浅析js中的继承/" data-title="浅析js中的继承 | Aralic的博客" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2015/05/29/glup/" data-title="gulp学习 | Aralic的博客" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -211,18 +216,18 @@ inhertPrototype(Parent, Child);
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/05/29/glup/" title="gulp学习">
+ <a href="/2015/06/03/git常见指令/" title="git常见指令">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  gulp学习</span>
+  git常见指令</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/05/16/CSS预处理之Less/"  title="CSS预处理之Less">
+<a href="/2015/05/18/浅析js中的继承/"  title="浅析js中的继承">
  <strong>NEXT:</strong><br/> 
- <span>CSS预处理之Less
+ <span>浅析js中的继承
 </span>
 </a>
 </div>
@@ -232,7 +237,7 @@ inhertPrototype(Parent, Child);
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="浅析js中的继承" data-thread-key="浅析js中的继承" data-author-key="Aralic" data-url="http://yoursite.com/post/浅析js中的继承"></div>
+	<div class="ds-thread" data-title="gulp学习" data-thread-key="glup" data-author-key="Aralic" data-url="http://yoursite.com/post/glup"></div>
 	
 </section>
 
@@ -242,7 +247,7 @@ inhertPrototype(Parent, Child);
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#组合继承"><span class="toc-number">1.</span> <span class="toc-text">组合继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#原型继承"><span class="toc-number">2.</span> <span class="toc-text">原型继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#寄生式组合继承"><span class="toc-number">3.</span> <span class="toc-text">寄生式组合继承</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#gulp安装"><span class="toc-number">1.</span> <span class="toc-text">gulp安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#新建文件目录"><span class="toc-number">2.</span> <span class="toc-text">新建文件目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开始构建项目"><span class="toc-number">3.</span> <span class="toc-text">开始构建项目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实时更新压缩文件"><span class="toc-number">4.</span> <span class="toc-text">实时更新压缩文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gulp模块"><span class="toc-number">5.</span> <span class="toc-text">gulp模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#参考链接"><span class="toc-number">6.</span> <span class="toc-text">参考链接</span></a></li></ol>
   </div>
 
 <div id="asidepart">
