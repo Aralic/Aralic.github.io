@@ -7,23 +7,25 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>浅析js中的闭包 | Aralic的博客</title>
+    <title>跨域共享cookie | Aralic的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Aralic">
     
-    <meta name="description" content="很长一段时间不理解闭包，后来了解了作用域，以及this相关问题才理解了闭包相关知识。闭包（closure），也是面试题常客。简单点来说就是函数嵌套函数。
-函数作为返回值:function foo () {
-    var a = 1;
-    return function () {
-      a++;
-      console.log(a);
-    }
-}
-var aaa = foo();
-aaa();  //2
-aaa();  //3
-其实这个代码不难理解，aaa是指向foo()返回的一个新函数，但是在这个函数里面引用了a变量，所以当执行完foo函数时，变量a还存在内存中不释放。即a分别为2和3。">
+    <meta name="description" content="最近正好学习跨域相关知识，但学的大多都是跨域请求数据，例如jsonp。但cookie跨域共享还没接触，遂找了些文章学习一下，并记录下来。
+记录的比较简洁，因为还没有碰到实际项目需求。如果以后遇到此问题，我会继续更新。
+cookie的设置规则
+通过键值对设置cookie信息，不过还可以设置其他可选信息，常见的例如添加expire过期时间。
+
+设置domian，如果没有设置，则表示当前默认域名。可设置成父域
+
+设置path，如果没有设置，则表示当前路径。可设置父路径
+
+
+http连接中，cookie信息发送规则
+domian设置的域名下的cookie信息
+
+并且和设置的路径一致">
     
     
     
@@ -85,15 +87,15 @@ aaa();  //3
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/05/12/浅析js中的闭包/" title="浅析js中的闭包" itemprop="url">浅析js中的闭包</a>
+      <a href="/2015/06/11/跨域共享cookie/" title="跨域共享cookie" itemprop="url">跨域共享cookie</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Aralic">Aralic</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-05-12T11:36:14.000Z" itemprop="datePublished">2015-05-12</time>
-    更新日期:<time datetime="2015-05-16T10:40:49.458Z" itemprop="dateModified">2015-05-16</time>
+    <time datetime="2015-06-11T03:27:00.000Z" itemprop="datePublished">2015-06-11</time>
+    更新日期:<time datetime="2015-06-11T03:30:22.652Z" itemprop="dateModified">2015-06-11</time>
     
   </p>
 </header>
@@ -102,94 +104,45 @@ aaa();  //3
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数作为返回值:"><span class="toc-number">1.</span> <span class="toc-text">函数作为返回值:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数作为参数："><span class="toc-number">2.</span> <span class="toc-text">函数作为参数：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#闭包的使用场景"><span class="toc-number">3.</span> <span class="toc-text">闭包的使用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#example_1："><span class="toc-number">3.1.</span> <span class="toc-text">example 1：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#example_2："><span class="toc-number">3.2.</span> <span class="toc-text">example 2：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#example_3："><span class="toc-number">3.3.</span> <span class="toc-text">example 3：</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#cookie的设置规则"><span class="toc-number">1.</span> <span class="toc-text">cookie的设置规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#http连接中，cookie信息发送规则"><span class="toc-number">2.</span> <span class="toc-text">http连接中，cookie信息发送规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二级域名共享cookie"><span class="toc-number">3.</span> <span class="toc-text">二级域名共享cookie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#父域都不同的跨越共享"><span class="toc-number">4.</span> <span class="toc-text">父域都不同的跨越共享</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cookie安全"><span class="toc-number">5.</span> <span class="toc-text">cookie安全</span></a></li></ol>
 		</div>
 		
-		<p>很长一段时间不理解闭包，后来了解了作用域，以及this相关问题才理解了闭包相关知识。<br>闭包（closure），也是面试题常客。简单点来说就是函数嵌套函数。</p>
-<h3 id="函数作为返回值:">函数作为返回值:</h3><pre><code><span class="function"><span class="keyword">function</span> <span class="title">foo</span> <span class="params">()</span> </span>{
-    <span class="keyword">var</span> a = <span class="number">1</span>;
-    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{
-      a++;
-      <span class="built_in">console</span>.log(a);
-    }
-}
-<span class="keyword">var</span> aaa = foo();
-aaa();  <span class="comment">//2</span>
-aaa();  <span class="comment">//3</span>
-</code></pre><p>其实这个代码不难理解，aaa是指向foo()返回的一个新函数，但是在这个函数里面引用了a变量，所以当执行完foo函数时，变量a还存在内存中不释放。即a分别为2和3。<br><a id="more"></a></p>
-<h3 id="函数作为参数：">函数作为参数：</h3><pre><code><span class="keyword">var</span> a = <span class="number">10</span>;
-<span class="function"><span class="keyword">function</span> <span class="title">foo</span> <span class="params">()</span> </span>{
-<span class="built_in">console</span>.log(a);
-}
-<span class="function"><span class="keyword">function</span> <span class="title">aaa</span><span class="params">(fn)</span> </span>{
- <span class="keyword">var</span> a = <span class="number">100</span>;
- fn();
-}
-aaa(foo);
-</code></pre><p>按照我以前的理解，当执行在aaa函数里面执行fn函数，那么如果自身没有a变量，就去父级作用域找a变量，此处是100，那结果是100吗？</p>
-<p>可惜答案不是，在这里结果是10，王福朋老师的博客讲的比较好，他说<strong>要去创建这个函数的作用域取值，而不是“父作用域”</strong>。</p>
-<h3 id="闭包的使用场景">闭包的使用场景</h3><p>因为本人还比较菜鸟，在这里取一个简单例子。当点击li的时候弹出li在ul中所处的位置即索引值。</p>
-<p>html代码：</p>
-<pre><code><span class="tag">&lt;<span class="title">ul</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">li</span>&gt;</span>001<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">li</span>&gt;</span>002<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">li</span>&gt;</span>003<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
-</code></pre><p>js代码：</p>
-<h4 id="example_1：">example 1：</h4><p>请看下面的代码，运行后发现，无论点击那个li，结果都是3了。</p>
-<pre><code><span class="keyword">var</span> aLi = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'li'</span>);
-<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i&lt;aLi.length; i++) {
-   aLi[i].onclick = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
-     alert(i);
-   }
-}
-</code></pre><p>因为在匿名函数里面并没有i变量，所以当for结束后，我们再去点击页面的li标签，此时i早就是3了。</p>
-<h4 id="example_2：">example 2：</h4><pre><code>aLi<span class="matrix">[i]</span>.onclick = (<span class="function"><span class="keyword">function</span><span class="params">(i)</span>{</span>
-        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
-            alert(<span class="built_in">i</span>);
-        }
-    })(<span class="built_in">i</span>);
-</code></pre><p>   这次的做法是把函数当返回值，通过自执行函数的参数，把变量i传进去，然后因为返回函数要引用这个i变量，所以当for循环结束也不会释放i变量。即在内存中保存了i变量的值。基于这样的原理，很容易在低版本ie中造成内存泄露。</p>
-<h4 id="example_3：">example 3：</h4><pre><code>for <span class="list">(<span class="keyword">var</span> i = <span class="number">0</span><span class="comment">; i&lt;aLi.length; i++) {</span>
-    <span class="list">(<span class="keyword">function</span><span class="list">(<span class="keyword">i</span>)</span>{
-        aLi[i].onclick = function<span class="list">()</span>{
-            alert<span class="list">(<span class="keyword">i</span>)</span><span class="comment">;</span>
-        }
-    })</span><span class="list">(<span class="keyword">i</span>)</span><span class="comment">;</span>
-}</span>
-</code></pre><p>这个原理和上面大同小异。</p>
-<p>小米前端闭包面试题：</p>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">repeat</span> <span class="params">(func, times, wait)</span> </span>{
-} <span class="comment">//这个函数能返回一个新函数，比如这样用</span>
-
-<span class="keyword">var</span> repeatedFun = repeat(alert, <span class="number">10</span>, <span class="number">5000</span>)
-<span class="comment">//调用这个 repeatedFun ("hellworld")</span>
-
-<span class="comment">//会alert十次 helloworld, 每次间隔5秒</span>
-</code></pre><p>我的答案：</p>
-<pre><code><span class="function"><span class="keyword">function</span></span> <span class="built_in">repeat</span> (func, times, <span class="keyword">wait</span>) {
-    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(str)</span></span> {
-        <span class="keyword">while</span> (times &gt;<span class="number">0</span>) {
-            setTimeout(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{
-                func(str);
-            },<span class="keyword">wait</span>);
-            times--;
-        }
-    }
-}
-
-var repeatedFun = <span class="built_in">repeat</span>(alert, <span class="number">10</span>, <span class="number">100</span>);
-repeatedFun (<span class="string">"hellworld"</span>);
-</code></pre><blockquote>
-<p>王福朋老师的博客：<a href="http://www.cnblogs.com/wangfupeng1988/p/3994065.html" target="_blank" rel="external">http://www.cnblogs.com/wangfupeng1988/p/3994065.html</a></p>
-</blockquote>
+		<p>最近正好学习跨域相关知识，但学的大多都是跨域请求数据，例如jsonp。但cookie跨域共享还没接触，遂找了些文章学习一下，并记录下来。</p>
+<p>记录的比较简洁，因为还没有碰到实际项目需求。如果以后遇到此问题，我会继续更新。</p>
+<h3 id="cookie的设置规则">cookie的设置规则</h3><ul>
+<li><p>通过键值对设置cookie信息，不过还可以设置其他可选信息，常见的例如添加expire过期时间。</p>
+</li>
+<li><p>设置domian，如果没有设置，则表示当前默认域名。可设置成父域</p>
+</li>
+<li><p>设置path，如果没有设置，则表示当前路径。可设置父路径</p>
+</li>
+</ul>
+<h3 id="http连接中，cookie信息发送规则">http连接中，cookie信息发送规则</h3><ul>
+<li><p>domian设置的域名下的cookie信息</p>
+</li>
+<li><p>并且和设置的路径一致</p>
+</li>
+</ul>
+<a id="more"></a>
+<h3 id="二级域名共享cookie">二级域名共享cookie</h3><p>当前需求：</p>
+<pre><code>www<span class="class">.a</span><span class="class">.com</span>
+bbs<span class="class">.a</span><span class="class">.com</span>
+</code></pre><p>共享cookie信息。</p>
+<p>设置domian的为 a.com </p>
+<h3 id="父域都不同的跨越共享">父域都不同的跨越共享</h3><p>当前需求</p>
+<pre><code>www<span class="class">.a</span><span class="class">.com</span>
+www<span class="class">.b</span><span class="class">.com</span>
+</code></pre><p>共享登录信息</p>
+<p>当在www.a.com下登录成功，那么随机把登录成功的信息写进cookie，并发送到后台</p>
+<p>当进入www.b.com下时，通过getScript （jsonp请求后台），在www.b.com下生成cookie。</p>
+<h3 id="cookie安全">cookie安全</h3><p>cookie不要存储比较敏感的信息，xss太强大。最好存储加密后的信息。密匙存储在后台。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/javascript/">javascript</a><a href="/tags/闭包/">闭包</a>
+  <span></span> <a href="/tags/cookie/">cookie</a><a href="/tags/跨域/">跨域</a>
   </div>
 
 
@@ -197,7 +150,7 @@ repeatedFun (<span class="string">"hellworld"</span>);
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/05/12/浅析js中的闭包/" data-title="浅析js中的闭包 | Aralic的博客" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2015/06/11/跨域共享cookie/" data-title="跨域共享cookie | Aralic的博客" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -206,19 +159,11 @@ repeatedFun (<span class="string">"hellworld"</span>);
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/05/16/CSS预处理之Less/" title="CSS预处理之Less">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  CSS预处理之Less</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/05/12/浅析js中的this/"  title="浅析js中的this">
+<a href="/2015/06/09/js零碎知识/"  title="js零碎知识">
  <strong>NEXT:</strong><br/> 
- <span>浅析js中的this
+ <span>js零碎知识
 </span>
 </a>
 </div>
@@ -228,7 +173,7 @@ repeatedFun (<span class="string">"hellworld"</span>);
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="浅析js中的闭包" data-thread-key="浅析js中的闭包" data-author-key="Aralic" data-url="http://yoursite.com/post/浅析js中的闭包"></div>
+	<div class="ds-thread" data-title="跨域共享cookie" data-thread-key="跨域共享cookie" data-author-key="Aralic" data-url="http://yoursite.com/post/跨域共享cookie"></div>
 	
 </section>
 
@@ -238,7 +183,7 @@ repeatedFun (<span class="string">"hellworld"</span>);
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数作为返回值:"><span class="toc-number">1.</span> <span class="toc-text">函数作为返回值:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数作为参数："><span class="toc-number">2.</span> <span class="toc-text">函数作为参数：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#闭包的使用场景"><span class="toc-number">3.</span> <span class="toc-text">闭包的使用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#example_1："><span class="toc-number">3.1.</span> <span class="toc-text">example 1：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#example_2："><span class="toc-number">3.2.</span> <span class="toc-text">example 2：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#example_3："><span class="toc-number">3.3.</span> <span class="toc-text">example 3：</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#cookie的设置规则"><span class="toc-number">1.</span> <span class="toc-text">cookie的设置规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#http连接中，cookie信息发送规则"><span class="toc-number">2.</span> <span class="toc-text">http连接中，cookie信息发送规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二级域名共享cookie"><span class="toc-number">3.</span> <span class="toc-text">二级域名共享cookie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#父域都不同的跨越共享"><span class="toc-number">4.</span> <span class="toc-text">父域都不同的跨越共享</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cookie安全"><span class="toc-number">5.</span> <span class="toc-text">cookie安全</span></a></li></ol>
   </div>
 
 <div id="asidepart">
