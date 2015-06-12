@@ -84,7 +84,7 @@
     </p>
   <p class="article-time">
     <time datetime="2015-06-12T10:27:00.000Z" itemprop="datePublished">2015-06-12</time>
-    更新日期:<time datetime="2015-06-12T10:27:48.233Z" itemprop="dateModified">2015-06-12</time>
+    更新日期:<time datetime="2015-06-12T10:30:29.353Z" itemprop="dateModified">2015-06-12</time>
     
   </p>
 </header>
@@ -103,22 +103,30 @@
 <li><p>在不支持dom2级的浏览器下，使用dom0级进行事件绑定？</p>
 <p> 因为我看过红宝书，所以知道这个概念，dom0级就是使用最原始的element.onclick = fn;形式，当时给自己挖了个坑，脑子反应快了也不好，当时立马想到这个不支持多个事件绑定啊，会被覆盖掉，面试官问我那怎么绑定多个事件？我大脑秀逗了（Cry），说使用命名空间。然后想了半天也没想出来。</p>
 <p> 面试完，在qq群问小伙伴，有人提出使用自执行函数，给绑定的函数里面添加自执行函数。但是感觉不是很好，繁琐，不易于移出事件。后来有个更好的方案，我觉得也应该是实际答案，我在task2任务中写util工具函数的时候。有一个需求，对一个元素移除绑定的事件，当最后一个参数为空的时候，则移出这个元素的指定事件‘click’下的所有绑定事件。当时我的解决方案是给这个元素自定义属性，例如使用element[type] = [fn1,fn2,fn3];通过数组的方式，数据挂载到元素身上，那么也可以运用到刚才这题，在元素执行click的时候，找元素身上挂载的数据，然后遍历这个数组。</p>
-<p> function addEvent(elem, type, fn) {</p>
-<pre><code><span class="keyword">var</span> evName = <span class="symbol">'e</span>v' + <span class="class"><span class="keyword">type</span>;</span>
-</code></pre><p> if (!elem[evName]) {</p>
-<pre><code><span class="atom">elem</span>[<span class="atom">evName</span>] = [];
-</code></pre><p> } </p>
-<pre><code><span class="tag">elem</span><span class="attr_selector">[evName]</span><span class="class">.push</span>(<span class="tag">fn</span>);
-</code></pre><p> }</p>
 </li>
 </ol>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">fire</span><span class="params">(elem, type)</span> {</span>
-    var evName = <span class="string">'ev'</span> + type;
-    <span class="keyword">for</span> (var <span class="built_in">i</span> = <span class="number">0</span>; <span class="built_in">i</span>&lt;elem<span class="matrix">[evName]</span>.<span class="built_in">length</span>; <span class="built_in">i</span>++) <span class="cell">{
-        elem[evName][i].call(elem);
-    }</span>
+<pre>
+<code>
+function addEvent(elem, type, fn) {
+    var evName = 'ev' + type;
+    if (!elem[evName]) {
+        elem[evName] = [];
+    } 
+    elem[evName].push(fn);
 }
-</code></pre>  
+
+
+function fire(elem, type) {
+    var evName = 'ev' + type;
+    for (var i = 0; i<elem[evname].length; i++)="" {="" elem[evname][i].call(elem);="" }="" <="" code="">
+</elem[evname].length;></code></pre>
+
+
+
+
+
+
+  
 	</div>
 		<footer class="article-footer clearfix">
 
