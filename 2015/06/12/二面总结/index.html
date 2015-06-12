@@ -7,18 +7,14 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>js原型笔记 | Aralic的博客</title>
+    <title>二面总结 | Aralic的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Aralic">
     
-    <meta name="description" content="javascript是基于原型的一门脚本语言，那究竟原型是什么？本文将从以下几个方面重点阐述原型
-构造函数是什么？
-构造函数和我们常见的Array String有什么关系？
-原型的使用？
-__proto__是什么？
-constructor是什么？
-什么是原形链？">
+    <meta name="description" content="周二收到二面邀请，是个女面试官，声音真好听。约周四下午面试，挂完电话真的好激动。
+没想到自己也能进二面，非名校出身，没有学长学姐在百度，在学校也没有人一起和我编程，有一次老师提到过，说大部分人都是毕业后找不到工作，然后报培训班。
+沟通问题一个人学习编程蛮寂寞的，短板也很多，这次面试就暴露出很多问题。">
     
     
     
@@ -80,15 +76,15 @@ constructor是什么？
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/04/29/javascript原型学习笔记/" title="js原型笔记" itemprop="url">js原型笔记</a>
+      <a href="/2015/06/12/二面总结/" title="二面总结" itemprop="url">二面总结</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Aralic">Aralic</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-04-29T10:58:32.000Z" itemprop="datePublished">2015-04-29</time>
-    更新日期:<time datetime="2015-05-01T03:30:04.634Z" itemprop="dateModified">2015-05-01</time>
+    <time datetime="2015-06-12T10:27:00.000Z" itemprop="datePublished">2015-06-12</time>
+    更新日期:<time datetime="2015-06-12T10:27:48.233Z" itemprop="dateModified">2015-06-12</time>
     
   </p>
 </header>
@@ -97,76 +93,38 @@ constructor是什么？
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#javascript是基于原型的一门脚本语言，那究竟原型是什么？"><span class="toc-number">1.</span> <span class="toc-text">javascript是基于原型的一门脚本语言，那究竟原型是什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#本文将从以下几个方面重点阐述原型"><span class="toc-number">1.1.</span> <span class="toc-text">本文将从以下几个方面重点阐述原型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一：请看下面一段代码"><span class="toc-number">2.</span> <span class="toc-text">一：请看下面一段代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是__proto__?"><span class="toc-number">3.</span> <span class="toc-text">什么是__proto__?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#constructor是什么？"><span class="toc-number">4.</span> <span class="toc-text">constructor是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#这个constructor到底怎么来的？"><span class="toc-number">5.</span> <span class="toc-text">这个constructor到底怎么来的？</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#沟通问题"><span class="toc-number">1.</span> <span class="toc-text">沟通问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#面试题总结"><span class="toc-number">2.</span> <span class="toc-text">面试题总结</span></a></li></ol>
 		</div>
 		
-		<h3 id="javascript是基于原型的一门脚本语言，那究竟原型是什么？">javascript是基于原型的一门脚本语言，那究竟原型是什么？</h3><h4 id="本文将从以下几个方面重点阐述原型">本文将从以下几个方面重点阐述原型</h4><ol>
-<li>构造函数是什么？</li>
-<li>构造函数和我们常见的Array String有什么关系？</li>
-<li>原型的使用？</li>
-<li><code>__proto__</code>是什么？</li>
-<li>constructor是什么？</li>
-<li>什么是原形链？</li>
+		<p>周二收到二面邀请，是个女面试官，声音真好听。约周四下午面试，挂完电话真的好激动。</p>
+<p>没想到自己也能进二面，非名校出身，没有学长学姐在百度，在学校也没有人一起和我编程，有一次老师提到过，说大部分人都是毕业后找不到工作，然后报培训班。</p>
+<h3 id="沟通问题">沟通问题</h3><p>一个人学习编程蛮寂寞的，短板也很多，这次面试就暴露出很多问题。例如，向面试官描述自己的具体项目经历。即使我已经有准备了，但是在电话面试中，我还是没有完全向面试官说清楚我的思路。（缺乏实际沟通，希望在以后实际工作中和别人多多交流）面试官也超nice，叫我挑一个具体的实际问题说说思路，当时好紧张，然后我就说了一个我在游戏中出现的问题，碰撞检测。也不知道面试官后来理解没有。有些尴尬。</p>
+<h3 id="面试题总结">面试题总结</h3><ol>
+<li><p>在不支持dom2级的浏览器下，使用dom0级进行事件绑定？</p>
+<p> 因为我看过红宝书，所以知道这个概念，dom0级就是使用最原始的element.onclick = fn;形式，当时给自己挖了个坑，脑子反应快了也不好，当时立马想到这个不支持多个事件绑定啊，会被覆盖掉，面试官问我那怎么绑定多个事件？我大脑秀逗了（Cry），说使用命名空间。然后想了半天也没想出来。</p>
+<p> 面试完，在qq群问小伙伴，有人提出使用自执行函数，给绑定的函数里面添加自执行函数。但是感觉不是很好，繁琐，不易于移出事件。后来有个更好的方案，我觉得也应该是实际答案，我在task2任务中写util工具函数的时候。有一个需求，对一个元素移除绑定的事件，当最后一个参数为空的时候，则移出这个元素的指定事件‘click’下的所有绑定事件。当时我的解决方案是给这个元素自定义属性，例如使用element[type] = [fn1,fn2,fn3];通过数组的方式，数据挂载到元素身上，那么也可以运用到刚才这题，在元素执行click的时候，找元素身上挂载的数据，然后遍历这个数组。</p>
+<p> function addEvent(elem, type, fn) {</p>
+<pre><code><span class="keyword">var</span> evName = <span class="symbol">'e</span>v' + <span class="class"><span class="keyword">type</span>;</span>
+</code></pre><p> if (!elem[evName]) {</p>
+<pre><code><span class="atom">elem</span>[<span class="atom">evName</span>] = [];
+</code></pre><p> } </p>
+<pre><code><span class="tag">elem</span><span class="attr_selector">[evName]</span><span class="class">.push</span>(<span class="tag">fn</span>);
+</code></pre><p> }</p>
+</li>
 </ol>
-<hr>
-<a id="more"></a>
-<h3 id="一：请看下面一段代码">一：请看下面一段代码</h3><pre><code><span class="comment">//声明一个构造函数 函数名首字母一般大写    </span>
-<span class="function"><span class="keyword">function</span> <span class="title">Fn</span><span class="params">()</span> </span>{
-
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">fire</span><span class="params">(elem, type)</span> {</span>
+    var evName = <span class="string">'ev'</span> + type;
+    <span class="keyword">for</span> (var <span class="built_in">i</span> = <span class="number">0</span>; <span class="built_in">i</span>&lt;elem<span class="matrix">[evName]</span>.<span class="built_in">length</span>; <span class="built_in">i</span>++) <span class="cell">{
+        elem[evName][i].call(elem);
+    }</span>
 }
-
-Fn.prototype.a = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
-     alert(<span class="number">1</span>);
-}
-<span class="comment">//得到实例化对象</span>
-<span class="keyword">var</span> f1 = <span class="keyword">new</span> Fn();
-<span class="comment">//调用构造函数的原型方法</span>
-f1.a();
-</code></pre><hr>
-<p>上面这段代码执行后结果会弹出1，可能有小伙伴看不懂我为什么要在这里讲构造函数了。暂且不急，再看看下面这段代码。</p>
-<p><strong>数组的使用</strong></p>
-<pre><code><span class="variable"><span class="keyword">var</span> arr</span> = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];
-arr.push(<span class="number">4</span>);
-</code></pre><p>如果细心的小伙伴可能看出来上面的代码和这两行代码有点像。不过肯定有些人觉得不像，那我继续转换一下。</p>
-<pre><code><span class="keyword">var</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);
-arr.push(<span class="number">4</span>);
-</code></pre><p><strong>数组也是构造函数？</strong></p>
-<p>瞬间感觉到很熟悉 有木有，Array也是一个构造函数吗？<br>下面我们来实践一下就知道了</p>
-<pre><code>`<span class="javascript">alert(<span class="keyword">typeof</span> <span class="built_in">Array</span>) <span class="comment">//function</span></span>`
-</code></pre><p>原来javascript内置的这些方法也是用构造函数的方法实现的。<br>比如Array.push 就是通过</p>
-<p><code>Array.prototype.push = function(){//代码实现}</code> </p>
-<p><strong>那是不是也意味着我们可以直接篡改这些原生方法？</strong></p>
-<p>答案是肯定，在这里我就证明了。不过我不建议这样干，因为会造成代码混乱。</p>
-<p>我们只要通过new 一个函数，就可以实例化得到这个对象，可以直接在这个构造函数上面添加原型方法，实例化的对象就直接能使用这个对象了。<br>下面再让大家看一张图和一段代码深入了解一下原型。</p>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">Fn</span><span class="params">()</span> </span>{
-    <span class="comment">//在构造函数中，this指向构造函数本身</span>
-    <span class="keyword">this</span>.x = <span class="number">1</span>;
-}
-Fn.prototype.x = <span class="number">2</span>;
-<span class="keyword">var</span> f1 = <span class="keyword">new</span> Fn();
-f1.x = <span class="number">3</span>;
-<span class="built_in">console</span>.log(f1.x);
-</code></pre><p><img src="http://i.imgur.com/j39KLSu.png" alt="脑图">!<br>请问输出结果到底是？<br>我们来分析一下这张图片。<br>1、现在f1是通过Fn构造函数实例出的对象，从图中我们可以清楚看出f1.x 距离f1最近，那必然结果是3.<br>2、假如现在注释掉<code>f1.x = 3；</code>,那答案又是多少？ 我们只要又从图中找，<br>f1距离<code>Fn.x = 1;</code>(图中写出Fn.a = 1了，作图的时候太马虎了).</p>
-<p>想必看到这里大家对于原形有了初步了解，那我再总结一下。<br>    通俗来讲，原型就是构造函数下面的方法和属性，重要的事情说三遍，为了区分普通函数，构造函数首字母大写。通过new这个构造函数，得到实例化对象。然后挂载在构造函数上面的方法和属性就可以直接用了。最常见就是Array，String这些常见属性和方法了。</p>
-<hr>
-<h3 id="什么是__proto__?">什么是<code>__proto__</code>?</h3><p>每个函数function都有一个prototype，即原型。这里再加一句话——每个对象都有一个<code>__proto__</code>，可成为隐式原型。</p>
-<pre><code>console.<span class="function"><span class="title">log</span><span class="params">(f1.__protot__ === Fn.prototype)</span></span> <span class="comment">//true</span>
-</code></pre><p>限于篇幅，在这里就不过多介绍这个属性了，感兴趣的朋友可以查阅相关资料。</p>
-<hr>
-<h3 id="constructor是什么？">constructor是什么？</h3><pre><code>再回到之前那张流程图，在Fn原型下有个<span class="function"><span class="keyword">constructor</span>属性，那这个属性是怎么来的？有什么用呢？</span>
-</code></pre><p>每个构造函数都会默认生成一个这个属性，它的作用是指向构造函数本身。<br>可能有朋友看到过怎么判断一个变量是不是数组的面试题？<br>如果用了这个constructor判断是不是指向Array就入了大坑了，因为我们可以手动修改这个constructor指向。<br>最好使用<br><code>Object.prototype.toString.call(arr) === &#39;[object Array]&#39;;</code></p>
-<hr>
-<h3 id="这个constructor到底怎么来的？">这个constructor到底怎么来的？</h3><pre><code>为了目标这个问题，我们的得弄明白，引用类型和值类型。像<span class="built_in">String</span>，<span class="built_in">Number</span>，<span class="literal">undefined</span>，<span class="built_in">boolean</span>类型，这些都是值类型，而引用类型是<span class="built_in">Object</span>，<span class="function"><span class="keyword">function</span>，<span class="title">null</span>之类的。引用类型都是对象，对象是属性的集合。</span>
-</code></pre><p>Object的原型下有个方法就是constructor，而我们创建的f1的constructor就是来源于Object，通过原形链的方法去查找。即Object是顶层对象，当我们要访问f1.constructor的时候，发现Fn构造函数上没有这个属性，那我们去创建Fn对象（Fn是一个构造函数，当然也是一个引用类型，那必须是对象啊）构造函数上去找，最后找到Object上去了。这就构成了原形链。真是环环相扣啊。</p>
-<hr>
-<p><strong>注：限于知识水平不够，可能有些地方解释的不够清楚，本人也一直在学习当中！如果有错误，欢迎大家指正，共同学习！</strong></p>
-  
+</code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/javascript/">javascript</a><a href="/tags/原型/">原型</a>
+  <span></span> <a href="/tags/面试/">面试</a>
   </div>
 
 
@@ -174,7 +132,7 @@ f1.x = <span class="number">3</span>;
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/04/29/javascript原型学习笔记/" data-title="js原型笔记 | Aralic的博客" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2015/06/12/二面总结/" data-title="二面总结 | Aralic的博客" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -183,21 +141,21 @@ f1.x = <span class="number">3</span>;
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/05/01/js类型检测/" title="js类型检测">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  js类型检测</span>
+
+<div class="next">
+<a href="/2015/06/11/跨域共享cookie/"  title="跨域共享cookie">
+ <strong>NEXT:</strong><br/> 
+ <span>跨域共享cookie
+</span>
 </a>
 </div>
-
 
 </nav>
 
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="js原型笔记" data-thread-key="javascript原型学习笔记" data-author-key="Aralic" data-url="http://yoursite.com/post/javascript原型学习笔记"></div>
+	<div class="ds-thread" data-title="二面总结" data-thread-key="二面总结" data-author-key="Aralic" data-url="http://yoursite.com/post/二面总结"></div>
 	
 </section>
 
@@ -207,7 +165,7 @@ f1.x = <span class="number">3</span>;
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#javascript是基于原型的一门脚本语言，那究竟原型是什么？"><span class="toc-number">1.</span> <span class="toc-text">javascript是基于原型的一门脚本语言，那究竟原型是什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#本文将从以下几个方面重点阐述原型"><span class="toc-number">1.1.</span> <span class="toc-text">本文将从以下几个方面重点阐述原型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一：请看下面一段代码"><span class="toc-number">2.</span> <span class="toc-text">一：请看下面一段代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是__proto__?"><span class="toc-number">3.</span> <span class="toc-text">什么是__proto__?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#constructor是什么？"><span class="toc-number">4.</span> <span class="toc-text">constructor是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#这个constructor到底怎么来的？"><span class="toc-number">5.</span> <span class="toc-text">这个constructor到底怎么来的？</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#沟通问题"><span class="toc-number">1.</span> <span class="toc-text">沟通问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#面试题总结"><span class="toc-number">2.</span> <span class="toc-text">面试题总结</span></a></li></ol>
   </div>
 
 <div id="asidepart">
