@@ -1,0 +1,498 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>Aralic的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Aralic">
+    
+    <meta name="description" content="domReady最近面试的时候被问到了什么是domReady。
+之前一直使用传统的window.onload,但是如果页面有大量的图片需要加载，那么资源还未加载完成的话用户触发页面上的事件怎么办？这时，我们就引入了domReady，只需要dom树构建完成，就触发回调函数。
+本人只是从初学者角度理解一">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Aralic的博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Aralic的博客">Aralic的博客</a></h1>
+				<a class="blog-motto"></a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">所有文章</a></li>
+					
+						<li><a href="http://www.cnblogs.com/Aralic/">博客园</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= null ><input type="text" name="q" size="30" placeholder="搜索"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/06/13/domReady/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="Aralic">Aralic</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-06-13T14:04:20.362Z" itemprop="datePublished">2015-06-13</time>
+    更新日期:<time datetime="2015-06-13T14:04:20.362Z" itemprop="dateModified">2015-06-13</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#domReady"><span class="toc-number">1.</span> <span class="toc-text">domReady</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文档："><span class="toc-number">2.</span> <span class="toc-text">参考文档：</span></a></li></ol>
+		</div>
+		
+		<h3 id="domReady">domReady</h3><p>最近面试的时候被问到了什么是domReady。</p>
+<p>之前一直使用传统的window.onload,但是如果页面有大量的图片需要加载，那么资源还未加载完成的话用户触发页面上的事件怎么办？这时，我们就引入了domReady，只需要dom树构建完成，就触发回调函数。</p>
+<p><strong>本人只是从初学者角度理解一下domReady</strong></p>
+<p>未考虑的因素还很多，所以我简单记录一下，等以后自己水平高了再来补充。</p>
+<p>首先了解一下浏览器渲染引擎的HTML解析流程.</p>
+<ol>
+<li>解析html标签，构建页面中的dom树。</li>
+<li>构建render树，解析样式信息。</li>
+<li>布局render树，确定dom元素在页面的位置大小等信息。</li>
+<li>绘制render树，渲染到页面显示。</li>
+</ol>
+<p><strong>window.onload</strong> 是第四步介绍触发，这会大大影响用户体验，因为图片样式还没加载完，用户如果点击轮播图切换之类的，都没办法绑定触发事件。</p>
+<p><strong>DOMContentLoaded</strong>是页面文档完全加载并解析完毕之后,会触发的事件，HTML文档不会等待样式文件,图片文件,子框架页面的加载(load事件可以用来检测HTML页面是否完全加载完毕(fully-loaded))。</p>
+<p>使用方法</p>
+<pre><code><span class="built_in">document</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, fn,<span class="literal">false</span>);
+</code></pre><p>兼容性：ie6，7，8不支持</p>
+<p>然后我把司徒正美老师的《javascript框架设计》介绍的domReady在ie低版本下处理的代码扒来学习一下。</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">IEContentLoaded</span><span class="params">(w, fn)</span> </span>{
+    <span class="keyword">var</span> d = w.document, done = <span class="literal">false</span>, 
+        init = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+            <span class="keyword">if</span> (!done) {
+                done = <span class="literal">true</span>;
+                fn();
+            }
+    };
+
+    (<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{
+        <span class="keyword">try</span> {
+            d.documentElement.doScroll(<span class="string">'left'</span>);
+        } <span class="keyword">catch</span> (e) {
+            setTimeout(<span class="built_in">arguments</span>.callee, <span class="number">50</span>);
+            <span class="keyword">return</span>;
+        }
+        init();
+    })();
+
+    d.onreadystatechange = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+        <span class="keyword">if</span> (d.readyState == <span class="string">'complete'</span>) {
+            d.onreadystatechange = <span class="literal">null</span>;
+            init();
+        }
+    };
+}
+</code></pre><ol>
+<li>首先定义一个初始化函数init，并且定义一个开关done，使得fn回调函数只执行一次。</li>
+<li>通过自执行函数，采用setTimeout轮询的方式，不断调用doScroll方法，<strong><a href="https://developer.mozilla.org/zh-CN/docs/Web/Events/DOMContentLoaded" target="_blank" rel="external">MDN</a></strong>上的解释：在IE8中,可以使用readystatechange事件来检测DOM文档是否加载完毕.在更早的IE版本中,可以通过每隔一段时间执行一次document.documentElement.doScroll(“left”)来检测这一状态，因为这条代码在DOM加载完毕之前执行时会抛出错误(throw an error)。</li>
+</ol>
+<h3 id="参考文档：">参考文档：</h3><blockquote>
+<p><a href="http://www.cnblogs.com/rubylouvre/archive/2010/04/15/1712780.html" target="_blank" rel="external">http://www.cnblogs.com/rubylouvre/archive/2010/04/15/1712780.html</a> 司徒正美<br><a href="http://kb.cnblogs.com/page/129756/#chapter1" target="_blank" rel="external">http://kb.cnblogs.com/page/129756/#chapter1</a> 浏览器内部工作原理</p>
+</blockquote>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2015/06/13/domReady/" data-title="Aralic的博客" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/06/12/二面总结/"  title="二面总结">
+ <strong>NEXT:</strong><br/> 
+ <span>二面总结
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="" data-thread-key="domReady" data-author-key="Aralic" data-url="http://yoursite.com/post/domReady"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#domReady"><span class="toc-number">1.</span> <span class="toc-text">domReady</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文档："><span class="toc-number">2.</span> <span class="toc-text">参考文档：</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/cookie/" title="cookie">cookie<sup>1</sup></a></li>
+		
+			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+		
+			<li><a href="/tags/gulp/" title="gulp">gulp<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>5</sup></a></li>
+		
+			<li><a href="/tags/tool/" title="tool">tool<sup>1</sup></a></li>
+		
+			<li><a href="/tags/原型/" title="原型">原型<sup>1</sup></a></li>
+		
+			<li><a href="/tags/日记/" title="日记">日记<sup>1</sup></a></li>
+		
+			<li><a href="/tags/类型/" title="类型">类型<sup>2</sup></a></li>
+		
+			<li><a href="/tags/继承/" title="继承">继承<sup>1</sup></a></li>
+		
+			<li><a href="/tags/跨域/" title="跨域">跨域<sup>1</sup></a></li>
+		
+			<li><a href="/tags/闭包/" title="闭包">闭包<sup>1</sup></a></li>
+		
+			<li><a href="/tags/零碎知识/" title="零碎知识">零碎知识<sup>1</sup></a></li>
+		
+			<li><a href="/tags/面试/" title="面试">面试<sup>1</sup></a></li>
+		
+			<li><a href="/tags/预处理/" title="预处理">预处理<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://zhangwenli.com/cv/cn.html" target="_blank" title="张雯莉">张雯莉</a></li>
+      <li><a href="https://www.anotherhome.net" target="_blank" title="Anotherhome">Anotherhome</a></li>
+      <li><a href="http://gaohaoyang.github.io/about/" target="_blank" title="浩阳的小站">浩阳的小站</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/cookie/" style="font-size: 10px;">cookie</a><a href="/tags/css/" style="font-size: 10px;">css</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/gulp/" style="font-size: 10px;">gulp</a><a href="/tags/javascript/" style="font-size: 20px;">javascript</a><a href="/tags/tool/" style="font-size: 10px;">tool</a><a href="/tags/原型/" style="font-size: 10px;">原型</a><a href="/tags/日记/" style="font-size: 10px;">日记</a><a href="/tags/类型/" style="font-size: 15px;">类型</a><a href="/tags/继承/" style="font-size: 10px;">继承</a><a href="/tags/跨域/" style="font-size: 10px;">跨域</a><a href="/tags/闭包/" style="font-size: 10px;">闭包</a><a href="/tags/零碎知识/" style="font-size: 10px;">零碎知识</a><a href="/tags/面试/" style="font-size: 10px;">面试</a><a href="/tags/预处理/" style="font-size: 10px;">预处理</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2015 
+		
+		<a href="http://yoursite.com" target="_blank" title="Aralic">Aralic</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'null', 'null');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+
