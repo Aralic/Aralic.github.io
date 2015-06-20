@@ -1,0 +1,595 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>nodeJs爬取网页数据 | Aralic的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Aralic">
+    
+    <meta name="description" content="发现node可以爬虫，正好我在找暑期实习，然后就使用node爬一下网站数据找实习。
+准备工作
+安装node，npm安装依赖包[cheerio, express， eventproxy]
+http和express模块的使用学习
+
+爬取目标网站//加载http模块
+var http = require(">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Aralic的博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Aralic的博客">Aralic的博客</a></h1>
+				<a class="blog-motto"></a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">所有文章</a></li>
+					
+						<li><a href="http://www.cnblogs.com/Aralic/">博客园</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= null ><input type="text" name="q" size="30" placeholder="搜索"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/06/20/node爬取网页数据/" title="nodeJs爬取网页数据" itemprop="url">nodeJs爬取网页数据</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="Aralic">Aralic</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-06-20T13:07:00.000Z" itemprop="datePublished">2015-06-20</time>
+    更新日期:<time datetime="2015-06-20T13:08:51.721Z" itemprop="dateModified">2015-06-20</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作"><span class="toc-number">1.</span> <span class="toc-text">准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#爬取目标网站"><span class="toc-number">1.1.</span> <span class="toc-text">爬取目标网站</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解析html代码"><span class="toc-number">1.2.</span> <span class="toc-text">解析html代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#并发请求"><span class="toc-number">1.3.</span> <span class="toc-text">并发请求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用express模块让数据响应到网页"><span class="toc-number">1.4.</span> <span class="toc-text">使用express模块让数据响应到网页</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用eventproxy模块控制并发"><span class="toc-number">1.5.</span> <span class="toc-text">使用eventproxy模块控制并发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#结束"><span class="toc-number">1.6.</span> <span class="toc-text">结束</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>发现node可以爬虫，正好我在找暑期实习，然后就使用node爬一下网站数据找实习。</p>
+<h3 id="准备工作">准备工作</h3><ul>
+<li>安装node，npm安装依赖包[cheerio, express， eventproxy]</li>
+<li><a href="http://javascript.ruanyifeng.com/nodejs/http.html" target="_blank" rel="external">http</a>和<a href="http://javascript.ruanyifeng.com/nodejs/express.html#toc0" target="_blank" rel="external">express</a>模块的使用学习</li>
+</ul>
+<h4 id="爬取目标网站">爬取目标网站</h4><pre><code><span class="comment">//加载http模块</span>
+<span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);
+
+<span class="comment">//目标网站，嘿嘿，这个网站有很多实习职位</span>
+<span class="keyword">var</span> pageUrl = <span class="string">'http://shixi.info/'</span>;
+
+http.get(pageUrl, <span class="function"><span class="keyword">function</span><span class="params">(res)</span> </span>{
+    <span class="keyword">var</span> html = <span class="string">''</span>;
+    res.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span><span class="params">(data)</span> </span>{
+        html += data;
+    });
+    res.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+        <span class="built_in">console</span>.log(html);
+    });
+});
+</code></pre><p>http的get请求一个目标网站，回调函数的参数是response，绑定两个事件，一个’data’事件,会不断触发获取数据，数据获取完触发’end‘ 事件。</p>
+<p>爬到的的数据就是目标网站的html源代码。</p>
+<p>现在html代码有了，我们该怎么解析这个呢？</p>
+<h4 id="解析html代码">解析html代码</h4><p>在这里我们使用cheerio模块，是服务器端的html解析模块，使用方法类型jQuery</p>
+<pre><code><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);
+<span class="keyword">var</span> cheerio = <span class="built_in">require</span>(<span class="string">'cheerio'</span>);
+<span class="keyword">var</span> pageUrl = <span class="string">'http://shixi.info/'</span>;
+
+http.get(pageUrl, <span class="function"><span class="keyword">function</span><span class="params">(res)</span> </span>{
+    <span class="keyword">var</span> html = <span class="string">''</span>;
+    res.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span><span class="params">(data)</span> </span>{
+        html += data;
+    });
+    res.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+        <span class="comment">//数据获取完，执行回调函数</span>
+        callback(html);
+    });
+});
+
+<span class="function"><span class="keyword">function</span> <span class="title">callback</span><span class="params">(html)</span> </span>{
+    <span class="comment">//使用load方法，参数是刚才获取的html源代码数据</span>
+    <span class="keyword">var</span> $ = cheerio.load(html);
+    <span class="keyword">var</span> arrUrl = [];
+
+    <span class="comment">//写法和jQuery一模一样，有没有觉得很cool</span>
+    $(<span class="string">'article'</span>).each(<span class="function"><span class="keyword">function</span><span class="params">(index, element)</span> </span>{
+        <span class="keyword">var</span> href = $(element).find(<span class="string">'.entry-title a'</span>).attr(<span class="string">'href'</span>);
+        arrUrl.push(href);
+    });
+}
+</code></pre><p>这样我们就把目标页面的每条招聘信息的网址存放进了一个数组，当然我们也可以通过对象字面量存一些其他数据，比如招聘信息的title，date等等。</p>
+<p>可能有人会问，我只要网址干嘛？嘿嘿，因为JD是在详情页里面，不去爬详情页，我咋看JD。</p>
+<h4 id="并发请求">并发请求</h4><p>为演示方便：只获取了职位title。</p>
+<p>对arrUrl迭代，GET请求。因为是异步操作，所以在这里我们建一个count变量，每次完成一个操作count++，执行done函数，如果count值和arrUrl数组的长度相同，执行函数。</p>
+<pre><code><span class="keyword">var</span> count = <span class="number">0</span>;
+<span class="keyword">var</span> results = [];
+<span class="function"><span class="keyword">function</span> <span class="title">done</span><span class="params">()</span> </span>{
+    <span class="keyword">if</span> (count == arrUrl.length) {
+        <span class="built_in">console</span>.log(<span class="string">'done'</span>);
+    }
+}
+arrUrl.forEach(<span class="function"><span class="keyword">function</span><span class="params">(item, index)</span> </span>{
+    http.get(item, <span class="function"><span class="keyword">function</span><span class="params">(res)</span> </span>{
+        <span class="keyword">var</span> html = <span class="string">''</span>;
+        res.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span><span class="params">(data)</span> </span>{
+            html += data;
+        });
+
+        res.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+            <span class="keyword">var</span> $ = cheerio.load(html);
+            <span class="keyword">var</span> title = $(<span class="string">'.entry-title'</span>).text();
+
+            results[index] = {
+                url: item,
+                title: title
+            };
+            count++;
+            done();
+        }); 
+    });
+});
+</code></pre><h4 id="使用express模块让数据响应到网页">使用express模块让数据响应到网页</h4><pre><code><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);
+<span class="keyword">var</span> app = express();
+
+<span class="function"><span class="keyword">function</span> <span class="title">done</span><span class="params">()</span> </span>{
+    <span class="keyword">if</span> (count == arrUrl.length) {
+        <span class="comment">//get 方法，第一个参数路径，是一个route的作用。</span>
+        <span class="comment">//回调函数，参数分别是：请求，响应。</span>
+        <span class="comment">//监听8888端口，浏览器打开 http://127.0.0.1:8888</span>
+        app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> </span>{
+            res.send(<span class="built_in">JSON</span>.stringify(results));
+        }).listen(<span class="string">'8888'</span>, <span class="string">'127.0.0.1'</span>);
+        <span class="built_in">console</span>.log(<span class="string">'done'</span>);
+    }
+}
+</code></pre><p>浏览器打开 <a href="http://127.0.0.1:8888，就能看到我们爬的数据了。" target="_blank" rel="external">http://127.0.0.1:8888，就能看到我们爬的数据了。</a></p>
+<p>当然我们也可以 对这些数据处理一下，返回到网页的是html内容文本。</p>
+<h4 id="使用eventproxy模块控制并发">使用eventproxy模块控制并发</h4><p>刚才我们使用的是count变量，有些不够优雅。这里我们引入eventproxy模块。</p>
+<pre><code><span class="keyword">var</span> eventproxy = <span class="built_in">require</span>(<span class="string">'eventproxy'</span>);
+<span class="comment">//得到实例化对象ep</span>
+<span class="keyword">var</span> ep = <span class="keyword">new</span> eventproxy();
+
+<span class="comment">//after，第一个参数是事件名，第二个参数是事件的数量，回调函数的参数是list集合，</span>
+ep.after(<span class="string">'subscribe'</span>, arrUrl.length, <span class="function"><span class="keyword">function</span><span class="params">(results)</span> </span>{
+    app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> </span>{
+        res.send(<span class="built_in">JSON</span>.stringify(results));
+    }).listen(<span class="string">'8888'</span>, <span class="string">'127.0.0.1'</span>);
+    <span class="built_in">console</span>.log(<span class="string">'done'</span>);
+});
+
+arrUrl.forEach(<span class="function"><span class="keyword">function</span><span class="params">(item, index)</span> </span>{
+    http.get(item, <span class="function"><span class="keyword">function</span><span class="params">(res)</span> </span>{
+        <span class="keyword">var</span> html = <span class="string">''</span>;
+        res.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span><span class="params">(data)</span> </span>{
+            html += data;
+        });
+
+        res.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+            <span class="keyword">var</span> $ = cheerio.load(html);
+            <span class="keyword">var</span> title = $(<span class="string">'.entry-title'</span>).text();
+
+            <span class="comment">//通知ep的subscribe事件，ep监测执行完的事件数量等于arrUrl.length,如果等于 执行回到函数。</span>
+            ep.emit(<span class="string">'subscribe'</span>, {
+                url: item,
+                title: title
+            });
+
+        }); 
+  });
+</code></pre><h4 id="结束">结束</h4><p>通过nodejs爬虫的学习，学习到了http，express，cheerio，eventproxy的简单使用。更了解到了node异步编程。</p>
+<blockquote>
+<p><a href="https://github.com/alsotang/node-lessons/tree/master/lesson4" target="_blank" rel="external">《使用 eventproxy 控制并发》</a></p>
+<p><a href="http://javascript.ruanyifeng.com/nodejs/http.html" target="_blank" rel="external">Http模块</a></p>
+</blockquote>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/node/">node</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2015/06/20/node爬取网页数据/" data-title="nodeJs爬取网页数据 | Aralic的博客" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/06/13/domReady/"  title="domReady">
+ <strong>NEXT:</strong><br/> 
+ <span>domReady
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="nodeJs爬取网页数据" data-thread-key="node爬取网页数据" data-author-key="Aralic" data-url="http://yoursite.com/post/node爬取网页数据"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作"><span class="toc-number">1.</span> <span class="toc-text">准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#爬取目标网站"><span class="toc-number">1.1.</span> <span class="toc-text">爬取目标网站</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解析html代码"><span class="toc-number">1.2.</span> <span class="toc-text">解析html代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#并发请求"><span class="toc-number">1.3.</span> <span class="toc-text">并发请求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用express模块让数据响应到网页"><span class="toc-number">1.4.</span> <span class="toc-text">使用express模块让数据响应到网页</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用eventproxy模块控制并发"><span class="toc-number">1.5.</span> <span class="toc-text">使用eventproxy模块控制并发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#结束"><span class="toc-number">1.6.</span> <span class="toc-text">结束</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/cookie/" title="cookie">cookie<sup>1</sup></a></li>
+		
+			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
+		
+			<li><a href="/tags/domReady/" title="domReady">domReady<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+		
+			<li><a href="/tags/gulp/" title="gulp">gulp<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>5</sup></a></li>
+		
+			<li><a href="/tags/node/" title="node">node<sup>1</sup></a></li>
+		
+			<li><a href="/tags/tool/" title="tool">tool<sup>1</sup></a></li>
+		
+			<li><a href="/tags/原型/" title="原型">原型<sup>1</sup></a></li>
+		
+			<li><a href="/tags/日记/" title="日记">日记<sup>1</sup></a></li>
+		
+			<li><a href="/tags/类型/" title="类型">类型<sup>2</sup></a></li>
+		
+			<li><a href="/tags/继承/" title="继承">继承<sup>1</sup></a></li>
+		
+			<li><a href="/tags/跨域/" title="跨域">跨域<sup>1</sup></a></li>
+		
+			<li><a href="/tags/闭包/" title="闭包">闭包<sup>1</sup></a></li>
+		
+			<li><a href="/tags/零碎知识/" title="零碎知识">零碎知识<sup>1</sup></a></li>
+		
+			<li><a href="/tags/面试/" title="面试">面试<sup>1</sup></a></li>
+		
+			<li><a href="/tags/预处理/" title="预处理">预处理<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://zhangwenli.com/cv/cn.html" target="_blank" title="张雯莉">张雯莉</a></li>
+      <li><a href="https://www.anotherhome.net" target="_blank" title="Anotherhome">Anotherhome</a></li>
+      <li><a href="http://gaohaoyang.github.io/about/" target="_blank" title="浩阳的小站">浩阳的小站</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/cookie/" style="font-size: 10px;">cookie</a><a href="/tags/css/" style="font-size: 10px;">css</a><a href="/tags/domReady/" style="font-size: 10px;">domReady</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/gulp/" style="font-size: 10px;">gulp</a><a href="/tags/javascript/" style="font-size: 20px;">javascript</a><a href="/tags/node/" style="font-size: 10px;">node</a><a href="/tags/tool/" style="font-size: 10px;">tool</a><a href="/tags/原型/" style="font-size: 10px;">原型</a><a href="/tags/日记/" style="font-size: 10px;">日记</a><a href="/tags/类型/" style="font-size: 15px;">类型</a><a href="/tags/继承/" style="font-size: 10px;">继承</a><a href="/tags/跨域/" style="font-size: 10px;">跨域</a><a href="/tags/闭包/" style="font-size: 10px;">闭包</a><a href="/tags/零碎知识/" style="font-size: 10px;">零碎知识</a><a href="/tags/面试/" style="font-size: 10px;">面试</a><a href="/tags/预处理/" style="font-size: 10px;">预处理</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2015 
+		
+		<a href="http://yoursite.com" target="_blank" title="Aralic">Aralic</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'null', 'null');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+
