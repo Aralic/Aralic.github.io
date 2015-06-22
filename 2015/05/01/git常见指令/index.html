@@ -12,7 +12,26 @@
     
     <meta name="author" content="Aralic">
     
-    <meta name="description" content="mkdir name  //创建项目cd name     //进入项目pwd         //显示当前目录 window下这命令无效git init    //初始化 让这个目录成为git仓库git add readme.txt //添加文件到仓库git commit -m “update info” //从缓冲区提交git status //查看仓库当前状态">
+    <meta name="description" content="准备工作mkdir foldername  //创建文件夹
+
+cd foldername  //进入文件夹
+
+mkdir foldername &amp;amp;&amp;amp;　cd foldername //创建文件夹并进入
+
+pwd   //显示当前目录 window下这命令无效
+
+git init  //初始化 让这个目录成为git仓库
+
+git status //查看仓库当前状态
+
+git log  //查看工作日志 //q退出
+
+git log --pretty=oneline //单行输入日志
+提交操作git add readme.txt //添加文件到仓库
+
+git commit -m &quot;update info&quot; //从缓冲区更新到版本库
+
+git commit -a -m &quot;update info&quot;//从工作区一次性更新到版本库">
     
     
     
@@ -84,7 +103,7 @@
     </p>
   <p class="article-time">
     <time datetime="2015-05-01T07:51:00.000Z" itemprop="datePublished">2015-05-01</time>
-    更新日期:<time datetime="2015-06-13T14:10:20.116Z" itemprop="dateModified">2015-06-13</time>
+    更新日期:<time datetime="2015-06-22T03:04:35.808Z" itemprop="dateModified">2015-06-22</time>
     
   </p>
 </header>
@@ -93,13 +112,97 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作"><span class="toc-number">1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提交操作"><span class="toc-number">2.</span> <span class="toc-text">提交操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#对比操作"><span class="toc-number">2.1.</span> <span class="toc-text">对比操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#撤销操作"><span class="toc-number">3.</span> <span class="toc-text">撤销操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除操作"><span class="toc-number">4.</span> <span class="toc-text">删除操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#恢复操作"><span class="toc-number">5.</span> <span class="toc-text">恢复操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程仓库操作"><span class="toc-number">6.</span> <span class="toc-text">远程仓库操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程仓库/代码冲突"><span class="toc-number">7.</span> <span class="toc-text">远程仓库/代码冲突</span></a></li></ol>
 		</div>
 		
-		<per><br><code><br>mkdir name  //创建项目<br><br>cd name     //进入项目<br><br>pwd         //显示当前目录 window下这命令无效<br><br>git init    //初始化 让这个目录成为git仓库<br><br>git add readme.txt //添加文件到仓库<br><br>git commit -m “update info” //从缓冲区提交<br><br>git status //查看仓库当前状态<br><a id="more"></a><br>git diff readme.txt //查看这个文件哪个地方修改了<br><br>git log     //查看工作日志 //q退出<br><br>git log —pretty=oneline //单行输入日志<br><br>git reset —hard HEAD^ //退回上一个版本<br><br>git reset —hard 3628164 //退回具体版本<br><br>git reflog //记录每一次命令<br><br>//HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令git reset —hard commit_id。<br><br>//穿梭前，用git log可以查看提交历史，以便确定要回退到哪个版本。<br><br>//要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。<br><br>rm test.txt //删除文件<br><br>git checkout test.txt//从版本库恢复<br><br>git rm test.txt //版本库删除<br><br>//先有本地库 后有远程库<br>git remote add origin git@github.com:Aralic/learngit.git //关联远程库<br><br>git push -u origin master// 本地同步到github上<br><br>//先有远程库 克隆到本地<br>git clone git@github.com:Arliac/gitskills.git<br><br>git checkout -b dev //创建分支<br><br>git checkout master //切换回master 分支<br><br>git branch  //查看当前分支<br><br>git merge dev //在master分支下 合并dev分支<br><br>git branch -d dev //删除dev分支<br><br>//当你从远程仓库克隆时，实际上Git自动把本地的master分支和远程的master分支对应起来了，并且，远程仓库的默认名称是origin。<br><br>git remote //查看远程库<br><br>git remote -v// 查看更详细信息<br><br>git push origin master//推送分支<br><br>git push origin dev //推送分支<br></code><br></per>
+		<h3 id="准备工作">准备工作</h3><pre><code><span class="keyword">mkdir</span> foldername  <span class="comment">//创建文件夹</span>
 
+<span class="keyword">cd</span> foldername  <span class="comment">//进入文件夹</span>
 
-<p>更多详情：<a href="http://www.liaoxuefeng.com/" target="_blank" rel="external">http://www.liaoxuefeng.com/</a></p>
+<span class="keyword">mkdir</span> foldername &amp;&amp;　<span class="keyword">cd</span> foldername <span class="comment">//创建文件夹并进入</span>
+
+<span class="keyword">pwd</span>   <span class="comment">//显示当前目录 window下这命令无效</span>
+
+git init  <span class="comment">//初始化 让这个目录成为git仓库</span>
+
+git status <span class="comment">//查看仓库当前状态</span>
+
+git <span class="keyword">log</span>  <span class="comment">//查看工作日志 //q退出</span>
+
+git <span class="keyword">log</span> --pretty=oneline <span class="comment">//单行输入日志</span>
+</code></pre><h3 id="提交操作">提交操作</h3><pre><code>git add readme<span class="class">.txt</span> <span class="comment">//添加文件到仓库</span>
+
+git commit -m <span class="string">"update info"</span> <span class="comment">//从缓冲区更新到版本库</span>
+
+git commit -<span class="tag">a</span> -m <span class="string">"update info"</span><span class="comment">//从工作区一次性更新到版本库</span>
+</code></pre><a id="more"></a>
+<h4 id="对比操作">对比操作</h4><pre><code>git diff readme<span class="class">.txt</span> <span class="comment">//工作区和缓冲区的文件内容差异</span>
+
+git diff --cached   <span class="comment">//缓冲区和版本库的文件内容差异</span>
+
+git diff master     <span class="comment">//工作区和版本库的内容差异</span>
+</code></pre><h3 id="撤销操作">撤销操作</h3><pre><code>git <span class="operator"><span class="keyword">reset</span> HEAD &lt;filename&gt;  //从缓冲区撤销回工作区
+
+git checkout <span class="comment">-- &lt;filename&gt; //工作区撤销回版本区的状态</span>
+
+git <span class="keyword">commit</span> -m <span class="string">"info"</span> <span class="comment">--amend //从缓冲区撤销回工作区，然后再重新提交</span></span>
+</code></pre><h3 id="删除操作">删除操作</h3><pre><code><span class="keyword">rm</span> &lt;filename&gt; <span class="comment">//删除文件</span>
+
+git <span class="keyword">rm</span> &lt;filename&gt; <span class="comment">//缓冲区删除文件，前提是工作区已经删除了该文件</span>
+
+git <span class="keyword">rm</span> -f &lt;filename&gt; <span class="comment">//缓冲区删除文件，工作区也一并删除了</span>
+
+git <span class="keyword">rm</span> --cached &lt;filename&gt; <span class="comment">//缓冲区删除文件，工作区不删除</span>
+</code></pre><h3 id="恢复操作">恢复操作</h3><pre><code><span class="comment">//HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭</span>
+
+git checkout &lt;commit <span class="keyword">id</span>&gt; &lt;filename&gt; <span class="comment">//工作区删除文件，从指定版本库中恢复文件</span>
+
+git checkout test<span class="variable">.txt</span><span class="comment">//从版本库恢复</span>
+
+git reset --hard &lt;commit <span class="keyword">id</span>&gt; <span class="comment">//退回具体版本</span>
+
+git reset --hard HEAD^ <span class="comment">//退回上一个版本</span>
+
+git reset --hard HEAD~&lt;num&gt; <span class="comment">//退回指定数字前版本</span>
+
+git reflog <span class="comment">//记录每一次命令</span>
+</code></pre><p>穿梭前，用git log可以查看提交历史，以便确定要回退到哪个版本。</p>
+<p>要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。</p>
+<h3 id="远程仓库操作">远程仓库操作</h3><p>当你从远程仓库克隆时，实际上Git自动把本地的master分支和远程的master分支对应起来了，</p>
+<p>并且，远程仓库的默认名称是origin。</p>
+<pre><code><span class="comment">//先有本地库 后有远程库</span>
+git remote add origin git@github<span class="class">.com</span>:Aralic/learngit<span class="class">.git</span> <span class="comment">//关联远程库</span>
+
+git push -u origin master<span class="comment">// 本地同步到github上</span>
+
+<span class="comment">//先有远程库 克隆到本地</span>
+git clone git@github<span class="class">.com</span>:Arliac/gitskills<span class="class">.git</span> 
+
+git checkout -<span class="tag">b</span> dev <span class="comment">//创建分支</span>
+
+git checkout master <span class="comment">//切换回master 分支</span>
+
+git branch  <span class="comment">//查看当前分支</span>
+
+git merge dev <span class="comment">//在master分支下 合并dev分支</span>
+
+git branch -d dev <span class="comment">//删除dev分支</span>
+
+git remote <span class="comment">//查看远程库名字</span>
+
+git remote -v<span class="comment">// 查看更详细信息</span>
+
+git push origin master<span class="comment">//推送分支</span>
+
+git push origin dev <span class="comment">//推送分支</span>
+</code></pre><h3 id="远程仓库/代码冲突">远程仓库/代码冲突</h3><pre><code>git fetch<span class="comment"> //同步远程仓库</span>
+
+git diff master origin/master<span class="comment"> //查看一下和远程同步过来的代码差异</span>
+
+git <span class="built_in">merge</span> origin/master<span class="comment"> //和远程仓库代码 合并到本地</span>
+
+git pull<span class="comment"> //直接和远程仓库合并代码</span>
+</code></pre><p>更多详情：<a href="http://www.liaoxuefeng.com/" target="_blank" rel="external">http://www.liaoxuefeng.com/</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -155,7 +258,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作"><span class="toc-number">1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提交操作"><span class="toc-number">2.</span> <span class="toc-text">提交操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#对比操作"><span class="toc-number">2.1.</span> <span class="toc-text">对比操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#撤销操作"><span class="toc-number">3.</span> <span class="toc-text">撤销操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除操作"><span class="toc-number">4.</span> <span class="toc-text">删除操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#恢复操作"><span class="toc-number">5.</span> <span class="toc-text">恢复操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程仓库操作"><span class="toc-number">6.</span> <span class="toc-text">远程仓库操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程仓库/代码冲突"><span class="toc-number">7.</span> <span class="toc-text">远程仓库/代码冲突</span></a></li></ol>
   </div>
 
 <div id="asidepart">
