@@ -7,26 +7,13 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>js类型检测 | Aralic的博客</title>
+    <title>underscore源码学习1 | Aralic的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Aralic">
     
-    <meta name="description" content="大约是三月初吧，在网上看到一道面试题，怎么判断一个变量类型是不是数组。然后从犀牛书以及查阅一些资料得到了答案。
-这里分为四种情况分析：
-通过constructor
- [].constructor === Array; //true
-
-
-这种方法比较坑，不推荐，因为constructor是可以自己修改的。
-
-通过instanceof
-[] instanceof Array; //true
-
-
-犀牛书给出的解释是在页面中含多个窗体或者iframe，那么会产生很多执行环境，一个iframe下的数组不是另一个窗体下构造函数的实例。那么如果出现这种极端条件，instanceof也不推荐使用。
-
-通过Array.isArray">
+    <meta name="description" content="期末事情特别多，7月份才考完放假。都没办法静下心来好好写代码，五月份学习backbone，接触到了underscore，发现源码特别少，1000多行代码。但提供了好多好用的工具方法。
+以前看过jQuery，但是无奈水平有限，看不懂，看完也忘记了。underscore（俗称底线库）真是大赞，文档注释都">
     
     
     
@@ -90,15 +77,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/05/01/js类型检测/" title="js类型检测" itemprop="url">js类型检测</a>
+      <a href="/2015/06/23/underscore源码学习1/" title="underscore源码学习1" itemprop="url">underscore源码学习1</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Aralic">Aralic</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-05-01T05:58:32.000Z" itemprop="datePublished">2015-05-01</time>
-    更新日期:<time datetime="2015-05-12T05:21:27.329Z" itemprop="dateModified">2015-05-12</time>
+    <time datetime="2015-06-23T06:39:00.000Z" itemprop="datePublished">2015-06-23</time>
+    更新日期:<time datetime="2015-06-23T06:39:42.994Z" itemprop="dateModified">2015-06-23</time>
     
   </p>
 </header>
@@ -107,53 +94,112 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#这里分为四种情况分析："><span class="toc-number">1.</span> <span class="toc-text">这里分为四种情况分析：</span></a></li></ol>
+		
 		</div>
 		
-		<p>大约是三月初吧，在网上看到一道面试题，怎么判断一个变量类型是不是数组。然后从犀牛书以及查阅一些资料得到了答案。</p>
-<h4 id="这里分为四种情况分析：">这里分为四种情况分析：</h4><ol>
-<li><p>通过constructor</p>
-<p> [].constructor === Array; //true</p>
-</li>
-</ol>
-<p>这种方法比较坑，不推荐，因为constructor是可以自己修改的。</p>
-<ol>
-<li><p>通过instanceof</p>
-<p>[] instanceof Array; //true</p>
-</li>
-</ol>
-<p>犀牛书给出的解释是在页面中含多个窗体或者iframe，那么会产生很多执行环境，一个iframe下的数组不是另一个窗体下构造函数的实例。那么如果出现这种极端条件，instanceof也不推荐使用。</p>
-<ol>
-<li>通过Array.isArray<a id="more"></a>
-在新版浏览器，IE9+都已经实现了原生方法</li>
-</ol>
-<p>Array.isArray([1,2]); //true</p>
-<ol>
-<li><p>通过toSting</p>
-<p> Object.prototype.toString.call([]) === ‘[object Array]’</p>
-<p>在一些博客和犀牛书给出的都是这种方法。</p>
-<p>因为之前对call语法，toString方法的疑惑，导致我只能死记硬背这句代码。最近在回顾继承有关知识，学到了call方法，这段代码意思是对[]调用Object对象原型下的toString方法，不同于数组原型下的toString的方法，之所以疑惑，因为数组下的toString是把一个数组转成字符串。为了屏蔽掉call方法的干扰。</p>
-<p> 我做了一个小处理</p>
-<p> Array.prototype.toString = Object.prototype.toString;<br> [].toString(); // “[object Array]”</p>
-</li>
-</ol>
-<p>验证出来了call的作用方法，同时也得出Array原型重写了toString方法（原型链关系推出来的）紧接着，我去了<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/toString" target="_blank" rel="external">MDN</a>查阅Object原型的toString方法，看看这究竟是什么鬼？原来这个返回对象类型字符串。同时像时间对象，正则对象，数学对象等等都能返回出来。</p>
-<pre><code><span class="keyword">var</span> <span class="built_in">toString</span> = <span class="type">Object</span>.prototype.<span class="built_in">toString</span>;
-<span class="built_in">toString</span>.call(<span class="keyword">new</span> <span class="type">Date</span>); <span class="comment">// [object Date]</span>
-<span class="built_in">toString</span>.call(<span class="keyword">new</span> <span class="type">String</span>); <span class="comment">// [object String]</span>
-<span class="built_in">toString</span>.call(<span class="type">Math</span>); <span class="comment">// [object Math]</span>
+		<p>期末事情特别多，7月份才考完放假。都没办法静下心来好好写代码，五月份学习backbone，接触到了underscore，发现源码特别少，1000多行代码。但提供了好多好用的工具方法。</p>
+<p>以前看过jQuery，但是无奈水平有限，看不懂，看完也忘记了。underscore（俗称底线库）真是大赞，文档注释都很详细，关键每个工具方法就十来行作用，很容易阅读。真是蛮适合学习的。</p>
+<p>我现在阅读的版本是：1.8.3</p>
+<ul>
+<li>匿名模块</li>
+</ul>
+<p>把代码都放在一个匿名自执行模块里面，这样做的好处是，防止变量污染，命名冲突等等各种问题，</p>
+<p>而且最后只暴露出 <code>_</code> 对象供外部使用。</p>
+<pre><code><span class="comment">//显式指定上下文</span>
+(<span class="function"><span class="keyword">function</span><span class="params">(
+    // <span class="keyword">do</span> something 
 
-<span class="comment">//Since JavaScript 1.8.5</span>
-<span class="built_in">toString</span>.call(undefined); <span class="comment">// [object Undefined]</span>
-<span class="built_in">toString</span>.call(null); <span class="comment">// [object Null]</span>
-</code></pre><p>好强大的样子！不过为什么官方取这个名字，好容易让人疑惑？？？</p>
+)</span>.<span class="title">call</span><span class="params">(this)</span>);</span>
+
+<span class="comment">//关于自执行: 就是把一个函数转成函数表达式。</span>
+<span class="comment">//example 1：</span>
+(<span class="function"><span class="keyword">function</span><span class="params">()</span><span class="comment">{
+    //do something
+}</span>)<span class="params">()</span>;</span>
+
+<span class="comment">//example 2:</span>
+(<span class="function"><span class="keyword">function</span><span class="params">()</span><span class="comment">{}</span><span class="params">()</span>);</span>
+
+<span class="comment">//example 3:</span>
+~<span class="function"><span class="keyword">function</span><span class="params">()</span><span class="comment">{}</span><span class="params">()</span>;</span>
+</code></pre><ul>
+<li>创建模块全局变量</li>
+</ul>
+<p>新建一些变量，供后续使用。减少原形链的查找，增强代码执行性能。</p>
+<pre><code><span class="comment">//创建根对象</span>
+<span class="keyword">var</span> root = this;
+
+<span class="comment">//保存之前的页面存在的 _ </span>
+<span class="keyword">var</span> previousUnderscore = root._;
+
+<span class="comment">//常见原型的引用保存</span>
+<span class="keyword">var</span> ArrayProto = <span class="keyword">Array</span>.prototype,
+    ObjProto = <span class="keyword">Object</span>.prototype,
+    FuncProto = <span class="function"><span class="keyword">Function</span>.<span class="title">prototype</span>;</span>
+
+<span class="comment">//核心方法的引用保存</span>
+<span class="keyword">var</span> push = ArrayProto.push,
+    slice = ArrayProto.slice,
+    toString = ObjProto.toString,
+    hasOwnProperty = ObjProto.hasOwnProperty;
+
+<span class="comment">//ES5中的方法</span>
+<span class="keyword">var</span> nativeIsArray = <span class="keyword">Array</span>.isArray,
+    nativeKeys = <span class="keyword">Object</span>.keys,
+    nativeBind = <span class="function"><span class="keyword">Function</span>.<span class="title">bind</span>,
+    <span class="title">nativeCreate</span> = <span class="title">Object</span>.<span class="title">create</span>;</span>
+</code></pre><ul>
+<li>创建全局 <code>_</code> </li>
+</ul>
+<p>我特意去找了underscore v0.1.0版本。</p>
+<pre><code><span class="comment">//把所以工具方法放在这个对象里面,都没有使用自执行函数</span>
+<span class="built_in">window</span>._ = {）;
+</code></pre><p>现在的版本 是新建一个函数</p>
+<pre><code><span class="keyword">var</span> _ = <span class="function"><span class="keyword">function</span><span class="params">(obj)</span> </span>{
+    <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> _) <span class="keyword">return</span> obj;
+    <span class="keyword">if</span> (!(<span class="keyword">this</span> <span class="keyword">instanceof</span> _)) <span class="keyword">return</span> <span class="keyword">new</span> _(obj);
+    <span class="keyword">this</span>._wrapped = obj;
+};
+</code></pre><p>最后暴露这个<code>_</code>函数，其他工具函数都挂载在这个下面，至于这个函数里面三行代码，有点搞不明白为什么这么写，我现在先研究这些好玩的具体的工具函数，然后回过头再来看整体为什么这么写。</p>
+<ul>
+<li>一个神奇的中转函数</li>
+</ul>
+<p>好多方法都用到这个函数</p>
+<pre><code>//optimeze 优化函数 一个神奇的函数
+var optimezeCb = <span class="function"><span class="keyword">function</span><span class="params">(func, context, argCount)</span></span> {
+    <span class="keyword">if</span> (context === void <span class="number">0</span>) {
+        <span class="keyword">return</span> func;
+    }
+
+    switch (argCount == null ? <span class="number">3</span> : argCount) {
+        <span class="keyword">case</span> <span class="number">1</span>: <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(value)</span></span> {
+            <span class="keyword">return</span> func.<span class="keyword">call</span>(context, <span class="keyword">value</span>);
+        };
+        <span class="keyword">case</span> <span class="number">2</span>: <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(value, index)</span></span> {
+            <span class="keyword">return</span> func.<span class="keyword">call</span>(context, <span class="keyword">value</span>, <span class="built_in">index</span>);
+        };
+        <span class="keyword">case</span> <span class="number">3</span>: <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(value, index, collection)</span></span> {
+            <span class="keyword">return</span> func.<span class="keyword">call</span>(context, <span class="keyword">value</span>, <span class="built_in">index</span>, collection);
+        };
+        <span class="keyword">case</span> <span class="number">4</span>: <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(accumulator, value, index, collection)</span></span> {
+            <span class="keyword">return</span> func.<span class="keyword">call</span>(context, accumulator, <span class="keyword">value</span>, <span class="built_in">index</span>, collection);
+        };
+    }
+
+    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span></span> {
+        <span class="keyword">return</span> func.apply(context, arguments);
+    };
+}
+</code></pre><p>void 0 表示undefined，在一些低版本ie浏览器比如 6，7，8，undefined是可以被篡改的。</p>
+<p>这个中转函数，如果存在参数，显式指定参数，也可以显式指定上线文。减少了代码量。一些迭代工具方法里面，不需要在显式指定了这些参数了，大大减少了整体代码量。</p>
+<p>框架层面就先研究这么多，接下来更新编写具体工具方法层面。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/javascript/">javascript</a><a href="/tags/类型/">类型</a>
+  <span></span> <a href="/tags/underscore/">underscore</a>
   </div>
 
 
@@ -161,7 +207,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/05/01/js类型检测/" data-title="js类型检测 | Aralic的博客" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2015/06/23/underscore源码学习1/" data-title="underscore源码学习1 | Aralic的博客" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -170,19 +216,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/05/01/git常见指令/" title="git常见指令">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  git常见指令</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/04/29/javascript原型学习笔记/"  title="js原型笔记">
+<a href="/2015/06/20/node爬取网页数据/"  title="nodeJs爬取网页数据">
  <strong>NEXT:</strong><br/> 
- <span>js原型笔记
+ <span>nodeJs爬取网页数据
 </span>
 </a>
 </div>
@@ -192,7 +230,7 @@
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="js类型检测" data-thread-key="js类型检测" data-author-key="Aralic" data-url="http://yoursite.com/post/js类型检测"></div>
+	<div class="ds-thread" data-title="underscore源码学习1" data-thread-key="underscore源码学习1" data-author-key="Aralic" data-url="http://yoursite.com/post/underscore源码学习1"></div>
 	
 </section>
 
@@ -202,7 +240,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#这里分为四种情况分析："><span class="toc-number">1.</span> <span class="toc-text">这里分为四种情况分析：</span></a></li></ol>
+  
   </div>
 
 <div id="asidepart">
