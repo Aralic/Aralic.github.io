@@ -7,20 +7,14 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>js零碎知识 | Aralic的博客</title>
+    <title>underscore源码学习2 | Aralic的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Aralic">
     
-    <meta name="description" content="检测null
-如果使用Objec.prototype.toString.call(null);
-  IE678等返回[object Object]
-
-使用 null &amp;amp;&amp;amp;  typeof null === ‘object’  
-  对象是true，而null是false
-
-
-pars">
+    <meta name="description" content="在学习underscore源码过程中，发现了自己很多基础知识点薄弱环节，而且源码也很大程度比较精简细致。
+目前我学习的方法是先看api文档，确定功能需求，以及参数，然后自己实现具体的代码，每个工具方法一般也就10来行代码不到。然后对比自己的代码和源码的差异。
+今天学习了三个比较重要的工具方法。分别是">
     
     
     
@@ -84,15 +78,15 @@ pars">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/06/09/js零碎知识/" title="js零碎知识" itemprop="url">js零碎知识</a>
+      <a href="/2015/06/27/underscore源码学习2/" title="underscore源码学习2" itemprop="url">underscore源码学习2</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Aralic">Aralic</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-06-09T13:51:00.000Z" itemprop="datePublished">2015-06-09</time>
-    更新日期:<time datetime="2015-06-09T14:38:42.677Z" itemprop="dateModified">2015-06-09</time>
+    <time datetime="2015-06-27T10:27:00.000Z" itemprop="datePublished">2015-06-27</time>
+    更新日期:<time datetime="2015-06-27T10:27:18.265Z" itemprop="dateModified">2015-06-27</time>
     
   </p>
 </header>
@@ -101,45 +95,100 @@ pars">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#检测null"><span class="toc-number">1.</span> <span class="toc-text">检测null</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#parseInt注意事项"><span class="toc-number">2.</span> <span class="toc-text">parseInt注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NaN"><span class="toc-number">3.</span> <span class="toc-text">NaN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#假值"><span class="toc-number">4.</span> <span class="toc-text">假值</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#bind"><span class="toc-number">1.</span> <span class="toc-text">bind</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bindAll"><span class="toc-number">2.</span> <span class="toc-text">bindAll</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#flatten"><span class="toc-number">3.</span> <span class="toc-text">flatten</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
 		</div>
 		
-		<h3 id="检测null">检测null</h3><ul>
-<li><p>如果使用Objec.prototype.toString.call(null);</p>
-<p>  IE678等返回[object Object]</p>
-</li>
-<li><p>使用 null &amp;&amp;  typeof null === ‘object’  </p>
-<p>  对象是true，而null是false</p>
-</li>
-</ul>
-<h3 id="parseInt注意事项">parseInt注意事项</h3><ul>
-<li><p>如果是解析 字符串’+1’  // 1</p>
-<p>  上周面试官就是问我这个输出结果，当时在电话里面没听清楚，我一直以为是问 1 + ‘1’的结果。</p>
-</li>
-<li><p>如果该字符串第一个字符是0，比如’09’，那么解析该字符串会基于八进制，而不是十进制求值，<br>在ie6下结果是0，而现代浏览器下默认是十进制了，还是’09’。</p>
-<p>  针对日期时间时，使用parseInt(‘09’, 10); //第二个参数表示进制</p>
-</li>
-</ul>
-<h3 id="NaN">NaN</h3><ul>
-<li>NaN === NaN   //false </li>
-<li>NaN !== NaN   //true</li>
-<li>而js提供方法 isNaN(NaN) // true<br>  NaN 应该是唯一一个不等于自身的值</li>
-</ul>
-<h3 id="假值">假值</h3><ul>
-<li>0</li>
-<li>NaN</li>
-<li>‘’ 空字符串</li>
-<li>false</li>
-<li>null</li>
-<li>undefined</li>
-</ul>
+		<p>在学习underscore源码过程中，发现了自己很多基础知识点薄弱环节，而且源码也很大程度比较精简细致。</p>
+<p>目前我学习的方法是先看api文档，确定功能需求，以及参数，然后自己实现具体的代码，每个工具方法一般也就10来行代码不到。然后对比自己的代码和源码的差异。</p>
+<p>今天学习了三个比较重要的工具方法。分别是bind，bindAll，flatten。</p>
+<p>以下代码是我自己编写和结合源码实现的。源码考虑的更深入。如果照搬源码，我担心没有自己的思想。</p>
+<h3 id="bind">bind</h3><p>给函数显式指定上下文，即this指向。</p>
+<p>用法：</p>
+<pre><code><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span><span class="params">(greeting)</span></span>{ 
+        <span class="keyword">return</span> greeting + <span class="string">': '</span> + <span class="keyword">this</span>.name;
+    };
+func = _.bind(func, {name: <span class="string">'moe'</span>}, <span class="string">'hi'</span>);
+<span class="built_in">console</span>.log(func()); <span class="comment">// hi: moe</span>
+</code></pre><p>bind 方法有三个参数。</p>
+<p>第一个目标函数，第二个指定的上下文对象，第三个传递给目标函数的参数（可选）</p>
+<p>ES5新增Function.bind方法。我们可以使用此方法实现。不支持的浏览器使用apply方法。</p>
+<pre><code><span class="keyword">var</span> nativeBind = <span class="built_in">Function</span>.bind;
+<span class="keyword">var</span> slice = <span class="built_in">Array</span>.prototype.slice;
+<span class="keyword">if</span> (nativeBind &amp;&amp; func.bind === nativeBind) 
+        <span class="keyword">return</span> nativeBind.apply(func, slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>));
+
+<span class="comment">//不支持bind方法兼容方案</span>
+<span class="keyword">var</span> args = slice.call(<span class="built_in">arguments</span>, <span class="number">2</span>);
+<span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> func.apply(context,args);   
+}
+</code></pre><p>在我编写代码过程中，出现了一个有意思的事情，把arguments的第二个以上参数转成数组过程中。<br>我的代码是：</p>
+<pre><code>var args = slice.call<span class="comment">(arguments)</span>.slice<span class="comment">(2)</span>;
+</code></pre><p>不知道把2直接放在call方法第二个参数，此处没有优化好。</p>
+<h3 id="bindAll">bindAll</h3><p>_.bindAll(object, *methodNames)</p>
+<p>*methodNames string类型。</p>
+<p>给一堆函数指定上线文，必选。</p>
+<p>用法：</p>
+<pre><code><span class="keyword">var</span> buttonView = {
+    label  : <span class="string">'underscore'</span>,
+    onClick: <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{ alert(<span class="string">'clicked: '</span> + <span class="keyword">this</span>.label); },
+    onHover: <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{ <span class="built_in">console</span>.log(<span class="string">'hovering: '</span> + <span class="keyword">this</span>.label); }
+};
+_.bindAll(buttonView, <span class="string">'onClick'</span>, <span class="string">'onHover'</span>);
+
+$(<span class="string">'#btn'</span>).bind(<span class="string">'click'</span>, buttonView.onClick); <span class="comment">//'clicked: underscore'</span>
+</code></pre><p>一开始我还有点看不懂。<em>.bindAll方法是让onClick，onHover两个函数指定上下文为buttonView，以后不管在那里调用他，该函数上下文都是buttonView对象。也就是说</em>.bindAll方法直接重写了buttonView对象里面的指定函数。</p>
+<p>代码实现：</p>
+<pre><code>_.bindAll = function(<span class="class"><span class="keyword">object</span>) {</span>
+    <span class="keyword">var</span> args = slice.call(arguments, <span class="number">1</span>);
+    _.each(args, function(key) {
+        <span class="class"><span class="keyword">object</span>[</span>key] = _.bind(<span class="class"><span class="keyword">object</span>[</span>key], <span class="class"><span class="keyword">object</span>);</span>
+    });
+    <span class="keyword">return</span> <span class="class"><span class="keyword">object</span>;</span>
+};
+</code></pre><p>先获取要指定函数的方法名数组args，然后通过each方法遍历该数组，重写object对象。</p>
+<h3 id="flatten">flatten</h3><p>功能：对数组扁平化操作。将一个嵌套多层的数组 array（数组） (嵌套可以是任何层数)转换为只有一层的数组。 如果你传递 shallow参数为true，数组将只减少一维的嵌套。</p>
+<p>例子：</p>
+<pre><code>_.flatten([<span class="number">1</span>, [<span class="number">2</span>], [<span class="number">3</span>, <span class="string">[[4]]</span>]]);
+=&gt; [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];
+
+_.flatten([<span class="number">1</span>, [<span class="number">2</span>], [<span class="number">3</span>, <span class="string">[[4]]</span>]], <span class="keyword">true</span>);
+=&gt; [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="string">[[4]]</span>];
+</code></pre><p>看到这个题目想起了三月份做的阿里实习笔试题，当时的要求是就是把多维数组转成一维数组。后来我自己使用递归的方法实现了。</p>
+<p>但后来发到网上，有网友给出了一个比较简单的方法</p>
+<pre><code>[<span class="number">1</span>,<span class="string">[[4,5,6],2,[[[7,8,9]]],3]]</span>.toString().split(<span class="string">","</span>)；
+</code></pre><p>今天回过头来发现这个方法不可行，因为这样返回的数组的元素成string类型了，而原数组是number类型，所以还是需要递归的方法。</p>
+<p>以下是我重写的代码：</p>
+<pre><code>_.flatten = <span class="function"><span class="keyword">function</span><span class="params">(array, shallow)</span> </span>{
+    <span class="keyword">var</span> newArr = [];
+    (<span class="function"><span class="keyword">function</span><span class="params">(arr)</span> </span>{
+        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = arr.length; i &lt; len; i++) {
+            <span class="keyword">if</span>(arr[i].length){    <span class="comment">//判断是不是嵌套数组</span>
+                <span class="keyword">if</span> (shallow) {
+                    <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>, lenj = <span class="keyword">array</span>[i].length; j&lt;lenj; j++) {
+                        newArr.push(<span class="keyword">array</span>[i][j]);
+                    }
+                } <span class="keyword">else</span> {
+                    arguments.callee(arr[i]);   <span class="comment">//递归调用</span>
+                }
+            }<span class="keyword">else</span>{
+                newArr.push(arr[i]);
+            }
+        }
+    })(<span class="keyword">array</span>);
+    <span class="keyword">return</span> newArr;
+};
+</code></pre><p>内部使用了一个自执行的函数，遍历array，如果子元素有length属性，那么表示是嵌套数组，并且继续判断shallow的值，如果为true，那么直接把遍历这个子项，把元素添加到newArr上去，如果shollow为false，则递归这个嵌套数组。</p>
+<p>最后返回新数组。</p>
+<h3 id="总结">总结</h3><p>通过这种自己编写代码的方法，熟悉了各个api的使用以及内部实现。并且夯实基础。</p>
+<p>日积月累，相信自己一定会有很大进步。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/零碎知识/">零碎知识</a>
+  <span></span> <a href="/tags/underscore/">underscore</a>
   </div>
 
 
@@ -147,7 +196,7 @@ pars">
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/06/09/js零碎知识/" data-title="js零碎知识 | Aralic的博客" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2015/06/27/underscore源码学习2/" data-title="underscore源码学习2 | Aralic的博客" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -156,19 +205,11 @@ pars">
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/06/11/跨域共享cookie/" title="跨域共享cookie">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  跨域共享cookie</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/06/05/日记/"  title="日记">
+<a href="/2015/06/23/underscore源码学习1/"  title="underscore源码学习1">
  <strong>NEXT:</strong><br/> 
- <span>日记
+ <span>underscore源码学习1
 </span>
 </a>
 </div>
@@ -178,7 +219,7 @@ pars">
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="js零碎知识" data-thread-key="js零碎知识" data-author-key="Aralic" data-url="http://yoursite.com/post/js零碎知识"></div>
+	<div class="ds-thread" data-title="underscore源码学习2" data-thread-key="underscore源码学习2" data-author-key="Aralic" data-url="http://yoursite.com/post/underscore源码学习2"></div>
 	
 </section>
 
@@ -188,7 +229,7 @@ pars">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#检测null"><span class="toc-number">1.</span> <span class="toc-text">检测null</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#parseInt注意事项"><span class="toc-number">2.</span> <span class="toc-text">parseInt注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NaN"><span class="toc-number">3.</span> <span class="toc-text">NaN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#假值"><span class="toc-number">4.</span> <span class="toc-text">假值</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#bind"><span class="toc-number">1.</span> <span class="toc-text">bind</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bindAll"><span class="toc-number">2.</span> <span class="toc-text">bindAll</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#flatten"><span class="toc-number">3.</span> <span class="toc-text">flatten</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
   </div>
 
 <div id="asidepart">
