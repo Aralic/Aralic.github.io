@@ -7,31 +7,13 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>git常见指令 | Aralic的博客</title>
+    <title>【水文】帝都实习前夜 | Aralic的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Aralic">
     
-    <meta name="description" content="准备工作mkdir foldername  //创建文件夹
-
-cd foldername  //进入文件夹
-
-mkdir foldername &amp;amp;&amp;amp;　cd foldername //创建文件夹并进入
-
-pwd   //显示当前目录 window下这命令无效
-
-git init  //初始化 让这个目录成为git仓库
-
-git status //查看仓库当前状态
-
-git log  //查看工作日志 //q退出
-
-git log --pretty=oneline //单行输入日志
-提交操作git add readme.txt //添加文件到仓库
-
-git commit -m &quot;update info&quot; //从缓冲区更新到版本库
-
-git commit -a -m &quot;update info&quot;//从工作区一次性更新到版本库">
+    <meta name="description" content="来帝都实习纯属意料之外的事情，最开始本来打算是去上海一个公司实习的，前端主管超nice，有一个项目需要重构我能全程参与进来。当时就在想如果没有更好的offer，我就决定去了。
+整个六月都在忙着面试，嘿嘿，比别人在三四月份就找到实习弱太多了。然后还忙着复习坐等大学最后的期末考试。（嘿嘿我大四没期末考试">
     
     
     
@@ -95,15 +77,15 @@ git commit -a -m &quot;update info&quot;//从工作区一次性更新到版本�
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/05/01/git常见指令/" title="git常见指令" itemprop="url">git常见指令</a>
+      <a href="/2015/07/14/【水文】帝都实习前夜/" title="【水文】帝都实习前夜" itemprop="url">【水文】帝都实习前夜</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Aralic">Aralic</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-05-01T07:51:00.000Z" itemprop="datePublished">2015-05-01</time>
-    更新日期:<time datetime="2015-06-22T03:04:35.808Z" itemprop="dateModified">2015-06-22</time>
+    <time datetime="2015-07-14T15:41:11.000Z" itemprop="datePublished">2015-07-14</time>
+    更新日期:<time datetime="2015-07-14T15:42:35.735Z" itemprop="dateModified">2015-07-14</time>
     
   </p>
 </header>
@@ -112,104 +94,26 @@ git commit -a -m &quot;update info&quot;//从工作区一次性更新到版本�
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作"><span class="toc-number">1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提交操作"><span class="toc-number">2.</span> <span class="toc-text">提交操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#对比操作"><span class="toc-number">2.1.</span> <span class="toc-text">对比操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#撤销操作"><span class="toc-number">3.</span> <span class="toc-text">撤销操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除操作"><span class="toc-number">4.</span> <span class="toc-text">删除操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#恢复操作"><span class="toc-number">5.</span> <span class="toc-text">恢复操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程仓库操作"><span class="toc-number">6.</span> <span class="toc-text">远程仓库操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程仓库/代码冲突"><span class="toc-number">7.</span> <span class="toc-text">远程仓库/代码冲突</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#谈谈在北京的见闻："><span class="toc-number">1.</span> <span class="toc-text">谈谈在北京的见闻：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#其实我写这么多，就是想说一下午我好像什么都没干成，就只是办了张银行卡？这效率完全不是我想要的。"><span class="toc-number">2.</span> <span class="toc-text">其实我写这么多，就是想说一下午我好像什么都没干成，就只是办了张银行卡？这效率完全不是我想要的。</span></a></li></ol>
 		</div>
 		
-		<h3 id="准备工作">准备工作</h3><pre><code><span class="keyword">mkdir</span> foldername  <span class="comment">//创建文件夹</span>
-
-<span class="keyword">cd</span> foldername  <span class="comment">//进入文件夹</span>
-
-<span class="keyword">mkdir</span> foldername &amp;&amp;　<span class="keyword">cd</span> foldername <span class="comment">//创建文件夹并进入</span>
-
-<span class="keyword">pwd</span>   <span class="comment">//显示当前目录 window下这命令无效</span>
-
-git init  <span class="comment">//初始化 让这个目录成为git仓库</span>
-
-git status <span class="comment">//查看仓库当前状态</span>
-
-git <span class="keyword">log</span>  <span class="comment">//查看工作日志 //q退出</span>
-
-git <span class="keyword">log</span> --pretty=oneline <span class="comment">//单行输入日志</span>
-</code></pre><h3 id="提交操作">提交操作</h3><pre><code>git add readme<span class="class">.txt</span> <span class="comment">//添加文件到仓库</span>
-
-git commit -m <span class="string">"update info"</span> <span class="comment">//从缓冲区更新到版本库</span>
-
-git commit -<span class="tag">a</span> -m <span class="string">"update info"</span><span class="comment">//从工作区一次性更新到版本库</span>
-</code></pre><a id="more"></a>
-<h4 id="对比操作">对比操作</h4><pre><code>git diff readme<span class="class">.txt</span> <span class="comment">//工作区和缓冲区的文件内容差异</span>
-
-git diff --cached   <span class="comment">//缓冲区和版本库的文件内容差异</span>
-
-git diff master     <span class="comment">//工作区和版本库的内容差异</span>
-</code></pre><h3 id="撤销操作">撤销操作</h3><pre><code>git <span class="operator"><span class="keyword">reset</span> HEAD &lt;filename&gt;  //从缓冲区撤销回工作区
-
-git checkout <span class="comment">-- &lt;filename&gt; //工作区撤销回版本区的状态</span>
-
-git <span class="keyword">commit</span> -m <span class="string">"info"</span> <span class="comment">--amend //从缓冲区撤销回工作区，然后再重新提交</span></span>
-</code></pre><h3 id="删除操作">删除操作</h3><pre><code><span class="keyword">rm</span> &lt;filename&gt; <span class="comment">//删除文件</span>
-
-git <span class="keyword">rm</span> &lt;filename&gt; <span class="comment">//缓冲区删除文件，前提是工作区已经删除了该文件</span>
-
-git <span class="keyword">rm</span> -f &lt;filename&gt; <span class="comment">//缓冲区删除文件，工作区也一并删除了</span>
-
-git <span class="keyword">rm</span> --cached &lt;filename&gt; <span class="comment">//缓冲区删除文件，工作区不删除</span>
-</code></pre><h3 id="恢复操作">恢复操作</h3><pre><code><span class="comment">//HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭</span>
-
-git checkout &lt;commit <span class="keyword">id</span>&gt; &lt;filename&gt; <span class="comment">//工作区删除文件，从指定版本库中恢复文件</span>
-
-git checkout test<span class="variable">.txt</span><span class="comment">//从版本库恢复</span>
-
-git reset --hard &lt;commit <span class="keyword">id</span>&gt; <span class="comment">//退回具体版本</span>
-
-git reset --hard HEAD^ <span class="comment">//退回上一个版本</span>
-
-git reset --hard HEAD~&lt;num&gt; <span class="comment">//退回指定数字前版本</span>
-
-git reflog <span class="comment">//记录每一次命令</span>
-</code></pre><p>穿梭前，用git log可以查看提交历史，以便确定要回退到哪个版本。</p>
-<p>要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。</p>
-<h3 id="远程仓库操作">远程仓库操作</h3><p>当你从远程仓库克隆时，实际上Git自动把本地的master分支和远程的master分支对应起来了，</p>
-<p>并且，远程仓库的默认名称是origin。</p>
-<pre><code><span class="comment">//先有本地库 后有远程库</span>
-git remote add origin git@github<span class="class">.com</span>:Aralic/learngit<span class="class">.git</span> <span class="comment">//关联远程库</span>
-
-git push -u origin master<span class="comment">// 本地同步到github上</span>
-
-<span class="comment">//先有远程库 克隆到本地</span>
-git clone git@github<span class="class">.com</span>:Arliac/gitskills<span class="class">.git</span> 
-
-git checkout -<span class="tag">b</span> dev <span class="comment">//创建分支</span>
-
-git checkout master <span class="comment">//切换回master 分支</span>
-
-git branch  <span class="comment">//查看当前分支</span>
-
-git merge dev <span class="comment">//在master分支下 合并dev分支</span>
-
-git branch -d dev <span class="comment">//删除dev分支</span>
-
-git remote <span class="comment">//查看远程库名字</span>
-
-git remote -v<span class="comment">// 查看更详细信息</span>
-
-git push origin master<span class="comment">//推送分支</span>
-
-git push origin dev <span class="comment">//推送分支</span>
-</code></pre><h3 id="远程仓库/代码冲突">远程仓库/代码冲突</h3><pre><code>git fetch<span class="comment"> //同步远程仓库</span>
-
-git diff master origin/master<span class="comment"> //查看一下和远程同步过来的代码差异</span>
-
-git <span class="built_in">merge</span> origin/master<span class="comment"> //和远程仓库代码 合并到本地</span>
-
-git pull<span class="comment"> //直接和远程仓库合并代码</span>
-</code></pre><p>更多详情：<a href="http://www.liaoxuefeng.com/" target="_blank" rel="external">http://www.liaoxuefeng.com/</a></p>
+		<p>来帝都实习纯属意料之外的事情，最开始本来打算是去上海一个公司实习的，前端主管超nice，有一个项目需要重构我能全程参与进来。当时就在想如果没有更好的offer，我就决定去了。</p>
+<p>整个六月都在忙着面试，嘿嘿，比别人在三四月份就找到实习弱太多了。然后还忙着复习坐等大学最后的期末考试。（嘿嘿我大四没期末考试了，这是我认为学校做得最正确的事情）从面试开始到拿到offer，从复习开始到大学考试结束。感觉前所未有的忐忑和放松。但整一个多月代码没写几行，异常没安全感。</p>
+<p>8号考完试，九号坐高铁来北京了，这是我第一次坐高铁。速度好快哇，下车直接上地铁，又是第一次坐地铁（地铁加速度好快哇）。嘿嘿，好多第一次，蛮新奇的。在大学同学的同学帮忙下，在北京找的一个临时出租房，很便宜，几百块钱一个月，让我暂时落脚了，真的蛮感谢她，不然我要拖着行李睡大街了。</p>
+<p>来北京好几天了，暂时未发现雾霾等空气异常状态。但饮食大大的不习惯，简直啊，完全不合口味。人是真多，公交地铁，到处坐满了人。好拥挤的感觉。</p>
+<h4 id="谈谈在北京的见闻：">谈谈在北京的见闻：</h4><p>地铁公交异常发达，但是人超多。</p>
+<p>天热，我住的是要快拆迁的地方，所以我可能要搬走，就没打算买个电风扇，免得搬家不好弄，因为我就一个行李箱。</p>
+<p>因为入职要交材料，好艰难找到一个小打印室，打印七张纸，收了我八块钱。哭晕了，我在学校打印室按一毛钱一张纸算的。</p>
+<p>下午两点出发坐公交去银行办张工资卡，两点40找到银行，挂号，填表，服务员姐姐说你这个号要排好长时间，下午五点前再过来，然后中午我也没吃饭，就去找了个地方吃饭，花了44块钱。四点我回到银行，果然好慢，不过令我意外的是，银行居然还加班，五点把大门关了，开个小侧门只出不进。完全出乎我的意料（我以前没见过银行加班）。以前在学校旁边的银行，十分钟就能搞定，流程简单。在这里好繁琐的样子， 其实我就是来办张银行卡开个户，真的好麻烦。结果搞到五点半。不过还是为这些加班的哥哥姐姐点赞。</p>
+<p>办完银行卡，回去的公交堵车，下班高峰期。以前我的认知里面，堵车一般都是前方路段故障或者出现了大雾，车祸之类的。北京的堵车刷新了我的三观，原来堵车是一个红灯前停了太多太多的车，结果要两三个红路灯才能驶离这个路口，车只能慢慢爬步。 以前我的学校在五六线城市，全市就20多路公交车，路修的也宽。常年没堵车发生过。</p>
+<h4 id="其实我写这么多，就是想说一下午我好像什么都没干成，就只是办了张银行卡？这效率完全不是我想要的。">其实我写这么多，就是想说一下午我好像什么都没干成，就只是办了张银行卡？这效率完全不是我想要的。</h4><p>不过现在已经安定下来了，实在热得受不了上午也买好电风扇。终于可以安安静静码代码了。希望明天去公司入职实习一切顺利，此刻心情真的蛮忐忑的。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/git/">git</a>
+  <span></span> <a href="/tags/日记/">日记</a>
   </div>
 
 
@@ -217,7 +121,7 @@ git pull<span class="comment"> //直接和远程仓库合并代码</span>
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/05/01/git常见指令/" data-title="git常见指令 | Aralic的博客" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2015/07/14/【水文】帝都实习前夜/" data-title="【水文】帝都实习前夜 | Aralic的博客" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -226,19 +130,11 @@ git pull<span class="comment"> //直接和远程仓库合并代码</span>
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/05/12/浅析js中的this/" title="浅析js中的this">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  浅析js中的this</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/05/01/js类型检测/"  title="js类型检测">
+<a href="/2015/06/27/underscore源码学习2/"  title="underscore源码学习2">
  <strong>NEXT:</strong><br/> 
- <span>js类型检测
+ <span>underscore源码学习2
 </span>
 </a>
 </div>
@@ -248,7 +144,7 @@ git pull<span class="comment"> //直接和远程仓库合并代码</span>
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="git常见指令" data-thread-key="git常见指令" data-author-key="Aralic" data-url="http://yoursite.com/post/git常见指令"></div>
+	<div class="ds-thread" data-title="【水文】帝都实习前夜" data-thread-key="【水文】帝都实习前夜" data-author-key="Aralic" data-url="http://yoursite.com/post/【水文】帝都实习前夜"></div>
 	
 </section>
 
@@ -258,7 +154,7 @@ git pull<span class="comment"> //直接和远程仓库合并代码</span>
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作"><span class="toc-number">1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提交操作"><span class="toc-number">2.</span> <span class="toc-text">提交操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#对比操作"><span class="toc-number">2.1.</span> <span class="toc-text">对比操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#撤销操作"><span class="toc-number">3.</span> <span class="toc-text">撤销操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除操作"><span class="toc-number">4.</span> <span class="toc-text">删除操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#恢复操作"><span class="toc-number">5.</span> <span class="toc-text">恢复操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程仓库操作"><span class="toc-number">6.</span> <span class="toc-text">远程仓库操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程仓库/代码冲突"><span class="toc-number">7.</span> <span class="toc-text">远程仓库/代码冲突</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#谈谈在北京的见闻："><span class="toc-number">1.</span> <span class="toc-text">谈谈在北京的见闻：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#其实我写这么多，就是想说一下午我好像什么都没干成，就只是办了张银行卡？这效率完全不是我想要的。"><span class="toc-number">2.</span> <span class="toc-text">其实我写这么多，就是想说一下午我好像什么都没干成，就只是办了张银行卡？这效率完全不是我想要的。</span></a></li></ol>
   </div>
 
 <div id="asidepart">
