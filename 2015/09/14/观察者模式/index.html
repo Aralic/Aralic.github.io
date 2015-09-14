@@ -7,19 +7,13 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>浅析js中的this | Aralic的博客</title>
+    <title>js观察者模式发布/订阅 | Aralic的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Aralic">
     
-    <meta name="description" content="this的用法this在日常javascript编码中很常见， 但是一直以来没有好好总结过。 今天在这里好好总结一下。 本文只讨论浏览器环境。 
-this指向全局var name = &quot;window&quot;;
-function foo() {
-    var name = &quot;local&quot;;
-    console.log(this.name);
-}
-foo(); 
-相信这段代码大家都看到过，在这里this指向了全局，输入结果是”window”.一开始我也不理解为什么有些时候this是指向内部函数，有些时候是指向window了。 相信好多小伙伴都和我一样比较疑惑， 后来我去翻阅犀牛书，犀牛书对函数this的解释是：关键字this没有作业域限制， 嵌套的函数不会从调用它的函数中继承this如果函数嵌套作为方法调用其this的值指向调用它的对象。 如果嵌套函数作为函数调用，其this不是全局对象（非严格模式下）就是undefined（严格模式下）。">
+    <meta name="description" content="实习期结束，最近回到学校开始学习node.js，node果然是强大。不过在涉及到文件操作的时候，发现要大量使用异步回掉操作。
+以前在写页面的时候，从没这么多异步操作，只有在使用’setInterval’和’XMLHttpRequest’时了解了一下异步编程。这次在学习node的过程中，把异步回掉算是">
     
     
     
@@ -83,15 +77,15 @@ foo();
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/05/12/浅析js中的this/" title="浅析js中的this" itemprop="url">浅析js中的this</a>
+      <a href="/2015/09/14/观察者模式/" title="js观察者模式发布/订阅" itemprop="url">js观察者模式发布/订阅</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Aralic">Aralic</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-05-12T05:07:10.000Z" itemprop="datePublished">2015-05-12</time>
-    更新日期:<time datetime="2015-05-12T05:08:00.000Z" itemprop="dateModified">2015-05-12</time>
+    <time datetime="2015-09-14T05:58:10.000Z" itemprop="datePublished">2015-09-14</time>
+    更新日期:<time datetime="2015-09-14T06:01:01.000Z" itemprop="dateModified">2015-09-14</time>
     
   </p>
 </header>
@@ -100,103 +94,86 @@ foo();
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#this的用法"><span class="toc-number">1.</span> <span class="toc-text">this的用法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#this指向全局"><span class="toc-number">1.1.</span> <span class="toc-text">this指向全局</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#作为对象的方法使用。"><span class="toc-number">1.2.</span> <span class="toc-text">作为对象的方法使用。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#call，apply_对this的显式绑定"><span class="toc-number">1.3.</span> <span class="toc-text">call，apply 对this的显式绑定</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#this在构造函数的使用"><span class="toc-number">1.4.</span> <span class="toc-text">this在构造函数的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#example_1:"><span class="toc-number">1.4.1.</span> <span class="toc-text">example 1:</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#example_2:"><span class="toc-number">1.4.2.</span> <span class="toc-text">example 2:</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#example_3："><span class="toc-number">1.4.3.</span> <span class="toc-text">example 3：</span></a></li></ol></li></ol></li></ol>
+		
 		</div>
 		
-		<h3 id="this的用法">this的用法</h3><p>this在日常javascript编码中很常见， 但是一直以来没有好好总结过。 今天在这里好好总结一下。 本文只讨论浏览器环境。 </p>
-<h4 id="this指向全局">this指向全局</h4><pre><code><span class="keyword">var</span> name = <span class="string">"window"</span>;
-<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> </span>{
-    <span class="keyword">var</span> name = <span class="string">"local"</span>;
-    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);
-}
-foo(); 
-</code></pre><p>相信这段代码大家都看到过，在这里this指向了全局，输入结果是”window”.一开始我也不理解为什么有些时候this是指向内部函数，有些时候是指向window了。 相信好多小伙伴都和我一样比较疑惑， 后来我去翻阅犀牛书，犀牛书对函数this的解释是：关键字this没有作业域限制， 嵌套的函数不会从调用它的函数中继承this如果函数嵌套作为方法调用其this的值指向调用它的对象。 如果嵌套函数作为函数调用，其this不是全局对象（非严格模式下）就是undefined（严格模式下）。<br><a id="more"></a><br>其实总结一下这段话就是： 一个函数如果是执行而不是作为一个对象的方法来使用，<br>那么它就指向全局对象或者undefined。 所以这就解释了第一段代码。 </p>
-<p>那接下来我们解释第二个结论：</p>
-<h4 id="作为对象的方法使用。">作为对象的方法使用。</h4><pre><code><span class="keyword">var</span> name = <span class="string">"window"</span>;
-<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> </span>{
-    <span class="keyword">var</span> name = <span class="string">"local"</span>;
-    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);
-}
-<span class="keyword">var</span> obj = {
-    name: <span class="string">'local'</span>,
-    foo: foo
+		<p>实习期结束，最近回到学校开始学习node.js，node果然是强大。不过在涉及到文件操作的时候，发现要大量使用异步回掉操作。</p>
+<p>以前在写页面的时候，从没这么多异步操作，只有在使用’setInterval’和’XMLHttpRequest’时了解了一下异步编程。这次在学习node的过程中，把异步回掉算是弄清楚了。但是在编码书写代码的时候，陷入了回调金字塔（callback hell）。使用es6Promise解决了一些问题。也看到了EventProxy模块基于事件驱动的解决方案。</p>
+<p>在使用EventProxy的过程中，有种似曾相识的感觉。有点像观察者模式发布/订阅。首先使用数组缓存订阅者订阅的消息，当订阅者订阅消息的时候，把订阅的消息push到指定消息的队列中，当发布者发布消息的时候，我们遍历执行push到指定消息队列中的回调事件。</p>
+<p>而订阅者不需要关心发布者什么时候发布消息。<br>而发布者不需要关心订阅者订阅的状态。</p>
+<pre><code><span class="keyword">var</span> observer = <span class="keyword">new</span> Observe();
+<span class="keyword">var</span> <span class="keyword">callback</span> = <span class="function"><span class="keyword">function</span><span class="params">(num)</span> </span>{
+    console.log(<span class="string">"event:"</span>+num); <span class="comment">// 输出event:2</span>
 };
-obj.foo(); 
-</code></pre><p>根据上面的结果， 我们很容易得出这里的this就指向了对象obj。在一些称谓中，这个叫做this的隐式绑定。</p>
-<h4 id="call，apply_对this的显式绑定">call，apply 对this的显式绑定</h4><p>个人不喜欢文字堆砌，还是直接上代码吧。</p>
-<pre><code><span class="keyword">var</span> name = <span class="string">"window"</span>;
-<span class="keyword">var</span> obj = {
-    name: <span class="string">"obj"</span>
+<span class="comment">// 订阅消息</span>
+observer.listen(<span class="string">"event1"</span>, <span class="keyword">callback</span>);
+observer.listen(<span class="string">"event2"</span>, <span class="keyword">callback</span>);
+<span class="comment">// 移除订阅消息1</span>
+observer.remove(<span class="string">'event1'</span>, <span class="keyword">callback</span>);
+<span class="comment">// 发布者发布消息</span>
+observer.trigger(<span class="string">"event1"</span>,<span class="number">1</span>);
+observer.trigger(<span class="string">"event2"</span>,<span class="number">2</span>);
+</code></pre><p>具体代码如下：</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">Observe</span><span class="params">()</span> </span>{
+    <span class="comment">// 缓存订阅者的消息队列</span>
+    <span class="keyword">this</span>._list = [];
+}
+<span class="comment">/**
+ *
+ * 订阅者订阅消息
+ * @param  {string}   key 消息名
+ * @param  {Function} fn  回调事件
+ * @return {Null}       
+ */</span>
+Observe.prototype.listen = <span class="function"><span class="keyword">function</span><span class="params">(key, fn)</span> </span>{
+    <span class="keyword">if</span> (!<span class="keyword">this</span>._list[key]) {
+        <span class="keyword">this</span>._list[key] = [];
+    }
+    <span class="comment">// 订阅消息，添加到缓存列表中</span>
+    <span class="keyword">this</span>._list[key].push(fn);
 };
-<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> </span>{
-    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);
-}
-foo(); <span class="comment">//直接调用函数 this指向window</span>
-foo.call(obj); <span class="comment">//改变函数的上下文，把obj传进去</span>
-</code></pre><p>这里显式绑定了函数的上下文，让this指向了obj，结果输入为“obj”<br><br><strong>顺带提一下，call，apply的区别</strong>，面试题经常被问。<br><br>使用call或者apply让一个函数以一个对象的方法执行，第一个参数是指定上下文，可以是一个对象也可以是null。<br><br>call和apply区别是第二个参数，apply是数组的形式传参。</p>
-<h4 id="this在构造函数的使用">this在构造函数的使用</h4><p>this的构造函数中使用蛮多的，也蛮方便的。</p>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">Foo</span><span class="params">()</span> </span>{
-    <span class="keyword">this</span>.a = <span class="string">"foo"</span>;
-}
-<span class="keyword">var</span> f = <span class="keyword">new</span> Foo();
-<span class="built_in">console</span>.log(f.a); 
-</code></pre><p>通过new一个函数，那么在构造函数中，this指向实例化的对象f。</p>
-<p><strong>上面说完了理论知识，那么我们来几个应用场景题</strong></p>
-<h5 id="example_1:">example 1:</h5><pre><code><span class="keyword">var</span> name = <span class="string">"window"</span>;
-<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> </span>{
-    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);
-}
-<span class="keyword">var</span> obj = {
-    name: <span class="string">'obj'</span>,
-    foo: foo
+<span class="comment">/**
+ * 
+ * 移除订阅的消息
+ * @param  {string}   key 消息名
+ * @param  {Function} fn  回掉事件
+ * @return {Null}       
+ */</span>
+Observe.prototype.remove = <span class="function"><span class="keyword">function</span><span class="params">(key, fn)</span> </span>{
+    <span class="comment">// 获取当前key下的消息记录</span>
+    <span class="keyword">var</span> arrFn = <span class="keyword">this</span>._list[key];
+    <span class="keyword">if</span> (!arrFn) <span class="keyword">return</span> <span class="literal">false</span>;
+    <span class="comment">// 未指定fn则删除当前key下所有的订阅消息</span>
+    <span class="keyword">if</span> (!fn) {
+        arrFn.length = <span class="number">0</span>;
+    } <span class="keyword">else</span> {
+        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arrFn.length; i++) {
+            <span class="keyword">if</span> (fn === arrFn[i]) {
+                arrFn.splice(i,<span class="number">1</span>);
+            }
+        }
+    }
 };
-<span class="keyword">var</span> a = obj.foo;
-a();
-obj.foo = <span class="literal">null</span>;
-a(); 
-</code></pre><p>可能有些同学会认为function也是对象，对象的复制是引用类型复制，那么只是指向obj.foo，如果obj.foo置空了，那么a也就不能输出this.name了。其实结果不是的，函数的复制是值的复制，和数组复制造成引用或者其他的引用不一样。简单点说 </p>
-<pre><code>a = obj.foo = <span class="function"><span class="keyword">function</span></span> {
-    console.<span class="built_in">log</span>(this.<span class="keyword">name</span>);
-}
-</code></pre><p>那么，现在执行a(); 和obj里面的foo函数还没有任何关系了。既两次执行结果都是’window’;</p>
-<h5 id="example_2:">example 2:</h5><p>看完上面这个例子，同样的我们有些是经常使用回调函数，把函数当一个参数传递，那这个参数是不是也是值的复制？请看下面的例子。</p>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">aaa</span><span class="params">(fn)</span> </span>{
-    fn();
-}
-
-<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> </span>{
-    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);
-}
-
-<span class="keyword">var</span> obj = {
-    name: <span class="string">'obj'</span>,
-    foo: foo
+<span class="comment">/**
+ * 发布者发布消息
+ * @param  {string} key 消息名
+ * @param  {string | Object} 消息数据
+ * @return {Null}  
+ */</span>
+Observe.prototype.trigger = <span class="function"><span class="keyword">function</span><span class="params">(key, aa)</span> </span>{
+    <span class="comment">// 得到key,第二个及以上的参数</span>
+    <span class="keyword">var</span> key = <span class="built_in">Array</span>.prototype.shift.call(<span class="built_in">arguments</span>);
+    <span class="keyword">var</span> args = <span class="built_in">arguments</span>;
+    <span class="keyword">var</span> arrFn = <span class="keyword">this</span>._list[key];
+    <span class="keyword">if</span> (!arrFn || arrFn.length === <span class="number">0</span>) {
+        <span class="keyword">return</span>;
+    }
+    <span class="comment">// 遍历执行当前key下面的所有消息</span>
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arrFn.length; i++) {
+        arrFn[i].apply(<span class="keyword">this</span>, args);
+    }
 };
-
-aaa(obj.foo);
-</code></pre><p>如果看不懂这个的话 ，这里也可以简化一下</p>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">aaa</span><span class="params">(fn)</span> </span>{ <span class="comment">//在参数这里 可以理解为 var fn = obj.foo;</span>
-    fn(); 
-}
-</code></pre><p>从例子1中我们可以知道函数是值的复制，那必然在aaa里面执行另外一个函数，而不是执行一个函数的方法，结果仍然是’window’.</p>
-<h5 id="example_3：">example 3：</h5><pre><code><span class="keyword">var</span> name = <span class="string">"window"</span>;
-setTimeout(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{
-    <span class="keyword">var</span> name = <span class="string">"local"</span>;
-    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);
-},<span class="number">1000</span>);
-</code></pre><p>相信大家经常用定时器吧，那么有没有踩过这个坑，在定时器中，this是指向全局window的。</p>
-<p>因为setTimeout是window下面的方法。代码可以转换为：</p>
-<pre><code><span class="keyword">var</span> name = <span class="string">"window"</span>;
-<span class="built_in">window</span>.setTimeout(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{
-    <span class="keyword">var</span> name = <span class="string">"local"</span>;
-    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);
-},<span class="number">1000</span>);
-</code></pre><p>一个对象的方法使用，那内部的this是指向这个方法，必然this指向了这个对象本身，既window。</p>
-<p>参考文档：</p>
-<blockquote>
-<p>javascript权威指南第六版</p>
-<p>晓婼：<a href="http://www.cnblogs.com/xiaoruo/p/4492453.html" target="_blank" rel="external">http://www.cnblogs.com/xiaoruo/p/4492453.html</a></p>
-</blockquote>
+</code></pre><p>关注我的微博：<a href="http://weibo.com/u/3059735367" target="_blank" rel="external">http://weibo.com/u/3059735367</a><br>关注我的cnblogs博客：<a href="http://www.cnblogs.com/" target="_blank" rel="external">http://www.cnblogs.com/Aralic</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -211,7 +188,7 @@ setTimeout(<span class="function"><span class="keyword">function</span><span cla
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/05/12/浅析js中的this/" data-title="浅析js中的this | Aralic的博客" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2015/09/14/观察者模式/" data-title="js观察者模式发布/订阅 | Aralic的博客" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -220,19 +197,11 @@ setTimeout(<span class="function"><span class="keyword">function</span><span cla
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/05/12/浅析js中的闭包/" title="浅析js中的闭包">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  浅析js中的闭包</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/05/01/git常见指令/"  title="git常见指令">
+<a href="/2015/09/14/浅析js中的继承/"  title="浅析js中的继承">
  <strong>NEXT:</strong><br/> 
- <span>git常见指令
+ <span>浅析js中的继承
 </span>
 </a>
 </div>
@@ -242,7 +211,7 @@ setTimeout(<span class="function"><span class="keyword">function</span><span cla
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="浅析js中的this" data-thread-key="浅析js中的this" data-author-key="Aralic" data-url="http://yoursite.com/post/浅析js中的this"></div>
+	<div class="ds-thread" data-title="js观察者模式发布/订阅" data-thread-key="观察者模式" data-author-key="Aralic" data-url="http://yoursite.com/post/观察者模式"></div>
 	
 </section>
 
@@ -252,7 +221,7 @@ setTimeout(<span class="function"><span class="keyword">function</span><span cla
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#this的用法"><span class="toc-number">1.</span> <span class="toc-text">this的用法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#this指向全局"><span class="toc-number">1.1.</span> <span class="toc-text">this指向全局</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#作为对象的方法使用。"><span class="toc-number">1.2.</span> <span class="toc-text">作为对象的方法使用。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#call，apply_对this的显式绑定"><span class="toc-number">1.3.</span> <span class="toc-text">call，apply 对this的显式绑定</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#this在构造函数的使用"><span class="toc-number">1.4.</span> <span class="toc-text">this在构造函数的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#example_1:"><span class="toc-number">1.4.1.</span> <span class="toc-text">example 1:</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#example_2:"><span class="toc-number">1.4.2.</span> <span class="toc-text">example 2:</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#example_3："><span class="toc-number">1.4.3.</span> <span class="toc-text">example 3：</span></a></li></ol></li></ol></li></ol>
+  
   </div>
 
 <div id="asidepart">
